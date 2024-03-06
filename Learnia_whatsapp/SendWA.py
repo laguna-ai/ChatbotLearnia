@@ -10,9 +10,8 @@ WAMessage = WhatsApp(token, phoneNumberId)
 
 # Welcome message
 bienvenida = """
-Prodesa, 30 años construyendo sueños en el territorio nacional.\n
-Colibrí: Balcones de Soacha 🤝\n
-Soy ChatBot Colibrí. Una inteligencia artificial que te ayudará a resolver todas tus dudas. Estoy aquí para ti.
+Learnia\n 🤝 Líderes en transformación digital🤝\n
+Soy ChatBot Learnia. Una inteligencia artificial que te ayudará a resolver todas tus dudas. Estoy aquí para ti.
 """
 
 
