@@ -16,7 +16,7 @@ llm_chain = LLMChain(llm=llm, prompt=prompt)
 # define embedding
 embeddings = OpenAIEmbeddings(openai_api_key=key)
 # load vector database
-db = FAISS.load_local("DesarrolloColibri/index", embeddings)
+db = FAISS.load_local("Learnia_whatsapp/index", embeddings)
 # define retriever
 retriever = db.as_retriever(
     search_type="similarity_score_threshold",
