@@ -16,11 +16,14 @@ llm_chain = LLMChain(llm=llm, prompt=prompt)
 # define embedding
 embeddings = OpenAIEmbeddings(openai_api_key=key)
 # load vector database
-db = FAISS.load_local("Learnia_whatsapp/index", embeddings,allow_dangerous_deserialization=True)
+db = FAISS.load_local(
+    "Learnia_whatsapp/index", embeddings, allow_dangerous_deserialization=True
+)
 # define retriever
 retriever = db.as_retriever(
     search_type="similarity_score_threshold",
-    search_kwargs={"k": 4, "score_threshold": 0.5})
+    search_kwargs={"k": 4, "score_threshold": 0.5},
+)
 # create a stuff documents chain.
 sd = StuffDocumentsChain(llm_chain=llm_chain)
 
