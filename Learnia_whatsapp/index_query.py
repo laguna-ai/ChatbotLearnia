@@ -20,8 +20,7 @@ db = FAISS.load_local("Learnia_whatsapp/index", embeddings,allow_dangerous_deser
 # define retriever
 retriever = db.as_retriever(
     search_type="similarity_score_threshold",
-    search_kwargs={"k": 4, "score_threshold": 0.5},
-)
+    search_kwargs={"k": 4, "score_threshold": 0.5})
 # create a stuff documents chain.
 sd = StuffDocumentsChain(llm_chain=llm_chain)
 
