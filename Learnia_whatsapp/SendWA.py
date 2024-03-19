@@ -10,7 +10,7 @@ WAMessage = WhatsApp(token, phoneNumberId)
 
 # Welcome message
 bienvenida = """
-Learnia\n 🤝 Líderes en transformación digital🤝\n
+*Learnia*\n\n 🤝 Líderes en transformación digital🤝\n
 Soy ChatBot Learnia. Una inteligencia artificial que te ayudará a resolver todas tus dudas. Estoy aquí para ti.
 """
 
