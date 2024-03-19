@@ -1,4 +1,5 @@
 import azure.functions as func
+from azure.core.exceptions import ResourceNotFoundError
 import logging
 from azure.storage.blob import BlobServiceClient
 from datetime import datetime, timedelta
@@ -23,12 +24,16 @@ def delete_blobs_after_24_hours(
         now = utc.localize(datetime.now())
         # Comparar con el objeto datetime que tiene zona horaria
         try:
-             
             if blob_client.exists() and blob.creation_time + timedelta(hours=23) < now:
                 blob_client.delete_blob()
-        except ResourceNotFoundError:
-                logging.info(f"El blob || {blob.name} || no fue encontrado.")
+        except ResourceNotFoundError as e:
+            logging.info("El blob || %s || no fue encontrado.", blob.name)
 
 def main(mytimer: func.TimerRequest) -> None:  # pylint: disable=unused-argument
     # Call the function to delete all blobs in the container that are older than 24 hours
     delete_blobs_after_24_hours(my_blob_service_client, my_container_name)
+
+
+
+
+
