@@ -12,6 +12,7 @@ connect_str = "DefaultEndpointsProtocol=https;AccountName=historialconversacione
 my_blob_service_client = BlobServiceClient.from_connection_string(connect_str)
 my_container_name = "conversacioneslernia"
 
+
 def delete_blobs_after_24_hours(
     blob_service_client: BlobServiceClient, container_name: str
 ):
@@ -29,11 +30,7 @@ def delete_blobs_after_24_hours(
         except ResourceNotFoundError:
             logging.info("El blob || %s || no fue encontrado.", blob.name)
 
+
 def main(mytimer: func.TimerRequest) -> None:  # pylint: disable=unused-argument
     # Call the function to delete all blobs in the container that are older than 24 hours
     delete_blobs_after_24_hours(my_blob_service_client, my_container_name)
-
-
-
-
-
