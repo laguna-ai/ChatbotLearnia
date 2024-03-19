@@ -19,7 +19,7 @@ auth = auth_sharepoint()
 ################################################################################################
 connect_str = "DefaultEndpointsProtocol=https;AccountName=historialconversaciones;AccountKey=1IyXT4sLXaaDhLf8Ljp6rxUO9juwpB1bBkdOiqC+9vyqeGTdMr7KpVc6PgZcQc+S4GWkMpkeRP+++AStiJs2AQ==;EndpointSuffix=core.windows.net"
 blob_service_client = BlobServiceClient.from_connection_string(connect_str)
-container_name = "conversacionesdevconstructora"
+container_name = "conversacioneslernia"
 container_client = blob_service_client.get_container_client(container_name)
 #################################################################################################
 
