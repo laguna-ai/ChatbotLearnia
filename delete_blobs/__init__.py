@@ -26,7 +26,7 @@ def delete_blobs_after_24_hours(
         try:
             if blob_client.exists() and blob.creation_time + timedelta(hours=23) < now:
                 blob_client.delete_blob()
-        except ResourceNotFoundError as e:
+        except ResourceNotFoundError:
             logging.info("El blob || %s || no fue encontrado.", blob.name)
 
 def main(mytimer: func.TimerRequest) -> None:  # pylint: disable=unused-argument
