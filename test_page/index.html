@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>Chatbot de Klientu</title>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+<link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css">
+<script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
+<df-messenger
+  location="us-central1"
+  project-id="learnia-416415"
+  agent-id="bb1d5cff-c590-4269-8012-f7e3e2bbab39"
+  language-code="es"
+  max-query-length="-1">
+  <df-messenger-chat-bubble
+    chat-title="Chatbot Learnia">
+  </df-messenger-chat-bubble>
+</df-messenger>
+<style>
+  df-messenger {
+    z-index: 999;
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+  }
+</style>
+  
+<h1>Chatbot de Learnia</h1>
+
+<div class="row">
+  
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <div id="container">
+      <div id="boxTitle">Descripción</div>
+      <div id="boxContent">
+        Asistente que brinda información sobre la plataforma de cursos Learnia.
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <div id="container">
+      <div id="boxTitle">Integraciones</div>
+      <div id="boxContent">
+        <ul>
+          <li>Página web</li>
+          <li>Whatsapp</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <div id="container">
+      <div id="boxTitle">Ideas</div>
+      <div id="boxContent">
+        <ul>
+          <li>Base de datos robusta</li>
+          <li>Despliegue local</li>
+          <li>Usar GitHub pages para demos</li>
+          <li>Integrar con SharePoint</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  
+</div>
+</body>
+
+</html>
