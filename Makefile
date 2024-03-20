@@ -17,5 +17,6 @@ format:
 lint:
 	pylint --disable=R,C Learnia_whatsapp/*.py
 	pylint --disable=R,C delete_blobs/*.py
-    pylint --disable=R,C Dialogflow_webhook/*.py
+	pylint --disable=R,C Dialogflow_webhook/*.py
+
 all: install lint

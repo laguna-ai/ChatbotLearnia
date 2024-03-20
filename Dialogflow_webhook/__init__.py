@@ -6,22 +6,23 @@ from .SysPrompt import sysPrompt
 from .Chat_Response import get_completion_from_messages, plantilla_sys
 from azure.core.exceptions import ResourceNotFoundError, HttpResponseError
 
+
 def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info("Python HTTP trigger function processed a request.")
-   
+
     # Get JSON of data
     request_json = req.get_json()
     logging.info("## JSON CONTENTS ##: %s", str(request_json))
-    prompt = request_json['text']
-    
-    try:
-        history=request_json['sessionInfo']['parameters']['context']
-    except KeyError:
-        history=sysPrompt
+    prompt = request_json["text"]
 
-    history.append({"role":"user", "content": prompt})
-    
-    #Respuesta del bot, añadir prompt_usuario y respuesta_bot al historial
+    try:
+        history = request_json["sessionInfo"]["parameters"]["context"]
+    except KeyError:
+        history = sysPrompt
+
+    history.append({"role": "user", "content": prompt})
+
+    # Respuesta del bot, añadir prompt_usuario y respuesta_bot al historial
     context = get_docs(prompt)
     history.append({"role": "system", "content": plantilla_sys(context)})
 
@@ -37,29 +38,19 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
     logging.info("Usuario: %s", prompt)
     logging.info("Chatbot: %s", respuesta)
-    
+
     # Construimos la respuesta JSON manualmente y la retornamos usando func.HttpResponse
     response_body = json.dumps(
-        {   
+        {
             "sessionInfo": {
-              "parameters": {
-                "context": history,
-              }
+                "parameters": {
+                    "context": history,
+                }
             },
-            "fulfillmentResponse": {
-                "messages": [
-                    {
-                        "text": {
-                            "text": [respuesta]
-                        }
-                    }
-                ]
-            }
+            "fulfillmentResponse": {"messages": [{"text": {"text": [respuesta]}}]},
         }
-    ) 
-    
+    )
+
     return func.HttpResponse(
-        body=response_body,
-        status_code=200,
-        mimetype="application/json"
+        body=response_body, status_code=200, mimetype="application/json"
     )
