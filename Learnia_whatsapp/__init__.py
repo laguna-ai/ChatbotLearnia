@@ -38,24 +38,28 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     # logging.info(f'## JSON CONTENTS ## : {info}')
 
     # Managment of status messages from WA (delivered, sent, received, etc).
-    try:
-        info["entry"][0]["changes"][0]["value"]["statuses"]
+    value = info["entry"][0]["changes"][0]["value"]
 
-    except KeyError as e:
-        logging.info(
-            "NO ES UN MENSAJE DE ESTADO (Excepción): %s",
-            str(info["entry"][0]["changes"][0]["value"]["messages"])
-            + "("
-            + str(e)
-            + ")",
-        )
-    else:  # si es un mensaje de status lanzamos status 200
+    if "statuses" in value:  # si es un mensaje de status lanzamos status 200
         return func.HttpResponse("Success", status_code=200)
+    elif "messages" in value:
+        messages = value["messages"][0]
+        message_type = messages["type"]
+        # si es reacción, documento, audio, o video, lo omitimos y lanzamos status 200 para evitar errores
+        if message_type in [
+            "reaction",
+            "document",
+            "image",
+            "audio",
+            "video",
+            "sticker",
+        ]:
+            return func.HttpResponse("Success", status_code=200)
 
     # Get phone and prompt from user
-    tel = info["entry"][0]["changes"][0]["value"]["messages"][0]["from"]
-    message = info["entry"][0]["changes"][0]["value"]["messages"][0]["text"]["body"]
-    name = info["entry"][0]["changes"][0]["value"]["contacts"][0]["profile"]["name"]
+    tel = messages["from"]
+    message = messages["text"]["body"]
+    name = value["contacts"][0]["profile"]["name"]
 
     ################################################################################################
     #####################        Prepare history            ########################################
