@@ -12,3 +12,4 @@ azure-functions
 langchain-openai
 langchain-community
 pytest
+flask
