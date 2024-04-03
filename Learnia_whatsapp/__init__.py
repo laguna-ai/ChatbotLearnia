@@ -98,7 +98,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     # logging.info(f'## Historial ## : {History}')
 
     logging.info("Usuario: %s", message)
-    logging.info("Chatbot: %s", respuesta)
+    logging.info("Chatbot: %s", respuesta_texto)
 
     # actualizamos blob
     blob.upload_blob(json.dumps(History), overwrite=True)
