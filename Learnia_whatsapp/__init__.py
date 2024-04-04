@@ -21,7 +21,7 @@ auth = auth_sharepoint()
 ################################################################################################
 connect_str = "DefaultEndpointsProtocol=https;AccountName=historialconversaciones;AccountKey=1IyXT4sLXaaDhLf8Ljp6rxUO9juwpB1bBkdOiqC+9vyqeGTdMr7KpVc6PgZcQc+S4GWkMpkeRP+++AStiJs2AQ==;EndpointSuffix=core.windows.net"
 blob_service_client = BlobServiceClient.from_connection_string(connect_str)
-container_name = "conversacioneslernia"
+container_name = "conversacioneslearnia"
 container_client = blob_service_client.get_container_client(container_name)
 #################################################################################################
 
@@ -85,13 +85,13 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     # número de interacciones previas
     n= len(History)
     # respuestas de texto y uso
-    if n==1:
+    if n==2:
         respuesta_texto, respuesta_uso = respuesta_sin_costo("¿Cuál es tu nombre?")
-    elif n==3:
+    elif n==4:
         respuesta_texto, respuesta_uso = respuesta_sin_costo("¡Gracias! ¿De qué país/ciudad nos escribes?")
-    elif n==5:
+    elif n==6:
         respuesta_texto, respuesta_uso = respuesta_sin_costo("¿A qué Universidad / Empresa representas?")
-    elif n==7:
+    elif n==8:
         respuesta_texto, respuesta_uso = respuesta_sin_costo("Gracias por compartirnos tus datos. ¿En qué te puedo ayudar?")
     else:
         context = get_docs(message)
