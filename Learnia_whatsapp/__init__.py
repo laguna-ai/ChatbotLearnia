@@ -79,20 +79,26 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     else:
         welcome = False
     History.append({"role": "user", "content": message})
-    
+
     #############################################################################################
     ######      Respuesta del bot, añadir prompt_usuario y respuesta_bot al historial    ###########
     # número de interacciones previas
-    n= len(History)
+    n = len(History)
     # respuestas de texto y uso
-    if n==2:
+    if n == 2:
         respuesta_texto, respuesta_uso = respuesta_sin_costo("¿Cuál es tu nombre?")
-    elif n==4:
-        respuesta_texto, respuesta_uso = respuesta_sin_costo("¡Gracias! ¿De qué país/ciudad nos escribes?")
-    elif n==6:
-        respuesta_texto, respuesta_uso = respuesta_sin_costo("¿A qué Universidad / Empresa representas?")
-    elif n==8:
-        respuesta_texto, respuesta_uso = respuesta_sin_costo("Gracias por compartirnos tus datos. ¿En qué te puedo ayudar?")
+    elif n == 4:
+        respuesta_texto, respuesta_uso = respuesta_sin_costo(
+            "¡Gracias! ¿De qué país/ciudad nos escribes?"
+        )
+    elif n == 6:
+        respuesta_texto, respuesta_uso = respuesta_sin_costo(
+            "¿A qué Universidad / Empresa representas?"
+        )
+    elif n == 8:
+        respuesta_texto, respuesta_uso = respuesta_sin_costo(
+            "Gracias por compartirnos tus datos. ¿En qué te puedo ayudar?"
+        )
     else:
         context = get_docs(message)
         History.append({"role": "system", "content": plantilla_sys(context)})
@@ -101,17 +107,19 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             respuesta = get_completion_from_messages(History)
             respuesta_texto = respuesta[0]
             respuesta_uso = respuesta[1]
-            
+
         except HttpResponseError as e:
-            respuesta_texto, respuesta_uso = respuesta_sin_costo("Error en el llamado a openAI: " + str(e))
+            respuesta_texto, respuesta_uso = respuesta_sin_costo(
+                "Error en el llamado a openAI: " + str(e)
+            )
         History.pop()  # delete the context prompt
-    
+
     # se envia la respuesta a Whatsapp
     sendWA(respuesta_texto, tel, welcome)
-    
+
     logging.info("Usuario: %s", message)
     logging.info("Chatbot: %s", respuesta_texto)
-    
+
     History.append({"role": "assistant", "content": respuesta_texto})
     Usage["prompt_tokens"] += respuesta_uso.prompt_tokens
     Usage["completion_tokens"] += respuesta_uso.completion_tokens
@@ -122,13 +130,10 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     blob_usage.upload_blob(json.dumps(Usage), overwrite=True)
     # actualizamos lista de sharepoint
     upload_list_sharepoint(tel, name, message, respuesta_texto)
-   
+
     return func.HttpResponse("Success", status_code=200)
 
 
-
 def respuesta_sin_costo(texto):
-    uso = CompletionUsage(
-        prompt_tokens=0, completion_tokens=0, total_tokens=0
-        )
+    uso = CompletionUsage(prompt_tokens=0, completion_tokens=0, total_tokens=0)
     return texto, uso
