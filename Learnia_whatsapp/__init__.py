@@ -103,12 +103,12 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             respuesta_uso = respuesta[1]
             
         except HttpResponseError as e:
-            respuesta_texto = "Error en el llamado a openAI: " + str(e)
-            respuesta_uso = CompletionUsage(
-                prompt_tokens=0, completion_tokens=0, total_tokens=0
-                )
+            respuesta_texto, respuesta_uso = respuesta_sin_costo("Error en el llamado a openAI: " + str(e))
         History.pop()  # delete the context prompt
-
+    
+    # se envia la respuesta a Whatsapp
+    sendWA(respuesta_texto, tel, welcome)
+    
     logging.info("Usuario: %s", message)
     logging.info("Chatbot: %s", respuesta_texto)
     
@@ -122,8 +122,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     blob_usage.upload_blob(json.dumps(Usage), overwrite=True)
     # actualizamos lista de sharepoint
     upload_list_sharepoint(tel, name, message, respuesta_texto)
-    # se envia la respuesta a Whatsapp
-    sendWA(respuesta_texto, tel, welcome)
+   
     return func.HttpResponse("Success", status_code=200)
 
 
