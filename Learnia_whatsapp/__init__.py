@@ -2,13 +2,13 @@ import logging
 import azure.functions as func
 from .SendWA import sendWA
 import json
-from .index_query import get_docs
+from RAG.index_query import get_docs
 from azure.storage.blob import BlobServiceClient
-from .SysPrompt import sysPrompt
-from .Chat_Response import get_completion_from_messages, plantilla_sys
+from RAG.SysPrompt import sysPrompt
+from RAG.Chat_Response import get_completion_from_messages, plantilla_sys
 from .List_Sharepoint import upload_list_sharepoint
 from .Autenticacion_sharepoint import auth_sharepoint
-from .calculo_costos import openai_api_calculate_cost
+from RAG.calculo_costos import openai_api_calculate_cost
 from azure.core.exceptions import ResourceNotFoundError, HttpResponseError
 from openai.types.completion_usage import CompletionUsage
 

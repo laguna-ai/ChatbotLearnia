@@ -1,9 +1,9 @@
 import logging
 import azure.functions as func
 import json
-from .index_query import get_docs
-from .SysPrompt import sysPrompt
-from .Chat_Response import get_completion_from_messages, plantilla_sys
+from RAG.index_query import get_docs
+from RAG.SysPrompt import sysPrompt
+from RAG.Chat_Response import get_completion_from_messages, plantilla_sys
 from azure.core.exceptions import ResourceNotFoundError, HttpResponseError
 
 

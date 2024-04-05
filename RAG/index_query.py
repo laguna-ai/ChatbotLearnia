@@ -15,7 +15,7 @@ llm_chain = LLMChain(llm=llm, prompt=prompt)
 embeddings = OpenAIEmbeddings(openai_api_key=key)
 # load vector database
 db = FAISS.load_local(
-    "Learnia_whatsapp/index", embeddings, allow_dangerous_deserialization=True
+    "RAG/index", embeddings, allow_dangerous_deserialization=True
 )
 # create a stuff documents chain.
 sd = StuffDocumentsChain(llm_chain=llm_chain)
