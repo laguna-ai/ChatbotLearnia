@@ -13,7 +13,6 @@ bienvenida = """
 Hola, Hablas con Learnio, IA de Learnia.
 """
 
-
 def sendWA(rta, tel, welcome):
     if welcome:
         WAMessage.send_message(bienvenida + rta, tel)
