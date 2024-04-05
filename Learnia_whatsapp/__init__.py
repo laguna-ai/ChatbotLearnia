@@ -5,7 +5,7 @@ from .List_Sharepoint import upload_list_sharepoint
 from .Autenticacion_sharepoint import auth_sharepoint
 from .request_manager import setup_Meta_webhook, manage_WA_status, manage_WA_format, get_personal_info
 from .conversation_manager import respond_message, update_history
-from blob_storage import get_blobs, prepare_history, update_blobs
+from .blob_storage import get_blobs, prepare_history, update_blobs
 
 # autenticamos y creamos columnas en sharepoint
 auth = auth_sharepoint()
