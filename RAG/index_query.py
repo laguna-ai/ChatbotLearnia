@@ -14,9 +14,7 @@ llm_chain = LLMChain(llm=llm, prompt=prompt)
 # define embedding
 embeddings = OpenAIEmbeddings(openai_api_key=key)
 # load vector database
-db = FAISS.load_local(
-    "RAG/index", embeddings, allow_dangerous_deserialization=True
-)
+db = FAISS.load_local("RAG/index", embeddings, allow_dangerous_deserialization=True)
 # create a stuff documents chain.
 sd = StuffDocumentsChain(llm_chain=llm_chain)
 
