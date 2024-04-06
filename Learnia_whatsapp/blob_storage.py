@@ -11,14 +11,16 @@ connect_str = "DefaultEndpointsProtocol=https;AccountName=historialconversacione
 blob_service_client = BlobServiceClient.from_connection_string(connect_str)
 container_name = "conversacioneslearnia"
 container_client = blob_service_client.get_container_client(container_name)
-#################################################################################################    
+#################################################################################################
+
 
 def get_blobs(tel):
     blob = container_client.get_blob_client(tel + ".txt")
     blob_usage = container_client.get_blob_client(tel + "$.txt")
     return blob, blob_usage
 
-def prepare_history(blob,blob_usage):
+
+def prepare_history(blob, blob_usage):
     try:
         History = json.loads(blob.download_blob(encoding="utf-8").readall())
         Usage = json.loads(blob_usage.download_blob(encoding="utf-8").readall())
@@ -32,6 +34,7 @@ def prepare_history(blob,blob_usage):
         welcome = False
 
     return History, Usage, welcome
+
 
 def update_blobs(blob, blob_usage, History, Usage):
     blob.upload_blob(json.dumps(History), overwrite=True)
