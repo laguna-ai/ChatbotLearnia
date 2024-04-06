@@ -9,26 +9,23 @@ def respuesta_sin_costo(texto):
     uso = CompletionUsage(prompt_tokens=0, completion_tokens=0, total_tokens=0)
     return texto, uso
 
+preguntas = [
+    "¿Cuál es tu nombre?",
+    "¡Gracias! ¿De qué país/ciudad nos escribes?",
+    "¿A qué Universidad / Empresa representas?",
+    "Gracias por compartirnos tus datos. ¿En qué te puedo ayudar?"
+]
+
 def respond_message(message, History):
     History.append({"role": "user", "content": message})
     
     # número de interacciones previas
     n = len(History)
     # respuestas de texto y uso
-    if n == 2:
-        respuesta_texto, respuesta_uso = respuesta_sin_costo("¿Cuál es tu nombre?")
-    elif n == 4:
-        respuesta_texto, respuesta_uso = respuesta_sin_costo(
-            "¡Gracias! ¿De qué país/ciudad nos escribes?"
-        )
-    elif n == 6:
-        respuesta_texto, respuesta_uso = respuesta_sin_costo(
-            "¿A qué Universidad / Empresa representas?"
-        )
-    elif n == 8:
-        respuesta_texto, respuesta_uso = respuesta_sin_costo(
-            "Gracias por compartirnos tus datos. ¿En qué te puedo ayudar?"
-        )
+    I= range(len(preguntas))
+    i= n//2-1
+    if i in I:
+        respuesta_texto, respuesta_uso = respuesta_sin_costo(preguntas[i])
     else:
         context = get_docs(message)
         History.append({"role": "system", "content": plantilla_sys(context)})
