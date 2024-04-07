@@ -22,7 +22,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     # Get JSON of data
     info = req.get_json()
     value = info["entry"][0]["changes"][0]["value"]
-    # logging.info(f'## JSON CONTENTS ## : {info}')
+    logging.info(f'## JSON CONTENTS ## : {info}')
 
     # Managment of status messages from WA (delivered, sent, received, etc).
     status_response = manage_WA_status(value)
