@@ -6,6 +6,8 @@ import json
 import os
 # Crear la clase Usuario
 
+basic_number = "57300554000"
+
 PHONE_ID = os.environ["PHONE_ID"]
 PHONE_NUMBER = "573202190464"
 identifier = "259154270612296"
@@ -86,7 +88,7 @@ def simulate_users_messages(num_users, num_iterations):
 
     # Crear usuarios Dummy
     users = [
-        Usuario(f"Usuario_Ficticio_{i}", f"57300555000{i}") for i in range(num_users)
+        Usuario(f"Usuario_Ficticio_{i}", f"{basic_number}{i}") for i in range(num_users)
     ]
 
     # Enviar mensajes

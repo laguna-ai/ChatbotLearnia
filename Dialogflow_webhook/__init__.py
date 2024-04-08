@@ -5,7 +5,7 @@ from RAG.index_query import get_docs
 from RAG.SysPrompt import sysPrompt
 from RAG.Chat_Response import get_completion_from_messages, plantilla_sys
 from azure.core.exceptions import ResourceNotFoundError, HttpResponseError
-
+import copy
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info("Python HTTP trigger function processed a request.")
@@ -18,7 +18,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     try:
         history = request_json["sessionInfo"]["parameters"]["context"]
     except KeyError:
-        history = sysPrompt
+        history = copy.deepcopy(history)
         parameters = ["nombre", "procedencia", "organizacion"]
         questions = [
             "¿Cuál es tu nombre?",

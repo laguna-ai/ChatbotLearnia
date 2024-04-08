@@ -3,6 +3,7 @@ import json
 from azure.core.exceptions import ResourceNotFoundError
 import logging
 from RAG.SysPrompt import sysPrompt
+import copy 
 
 ################################################################################################
 #########      Crear una conexión con  almacenamiento blob  ####################################
@@ -25,7 +26,7 @@ def prepare_history(blob, blob_usage):
         History = json.loads(blob.download_blob(encoding="utf-8").readall())
         Usage = json.loads(blob_usage.download_blob(encoding="utf-8").readall())
     except ResourceNotFoundError as e:
-        History = sysPrompt
+        History = copy.deepcopy(sysPrompt)
         Usage = {"prompt_tokens": 0, "completion_tokens": 0, "total_cost": 0}
         welcome = True
         logging.info("No hay historial en blob: %s", e)

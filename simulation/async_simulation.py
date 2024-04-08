@@ -1,19 +1,12 @@
-from .user_messages import Usuario, message_bank
+from .user_messages import Usuario, message_bank, basic_number
 import asyncio
 import aiohttp  # Necesario para solicitudes HTTP asíncronas
 import random
 
-endpoint = "http://localhost:7071/api/Learnia_whatsapp"
-# endpoint="https://chatbot-webhooks.azurewebsites.net/api/Learnia_whatsapp"
-
-n_users = 5
-n_iterations = 5
-
 
 # Simulación asíncrona
 
-
-async def send_message_async(session, user, message, delay):
+async def send_message_async(session, user, message, delay, endpoint):
     # Simular tiempo antes del envío
     await asyncio.sleep(delay)
     json_message = user.create_message(message)
@@ -23,9 +16,9 @@ async def send_message_async(session, user, message, delay):
         )
 
 
-async def simulate_users_messages_async(session, num_users, num_iterations):
+async def simulate_users_messages_async(session, num_users, num_iterations, endpoint):
     users = [
-        Usuario(f"Usuario_Ficticio_{i}", f"57300555000{i}") for i in range(num_users)
+        Usuario(f"Usuario_Ficticio_{i}", f"{basic_number}{i}") for i in range(num_users)
     ]
     tasks = []
 
@@ -38,16 +31,16 @@ async def simulate_users_messages_async(session, num_users, num_iterations):
             message = random.choice(message_bank)
             delay = Delay[i]
             # Programar la tarea sin esperar a que termine
-            task = send_message_async(session, user, message, delay)
+            task = send_message_async(session, user, message, delay, endpoint)
             tasks.append(asyncio.create_task(task))
 
     # Esperar a que todas las tareas programadas se completen
     await asyncio.gather(*tasks)
 
 
-async def main():
+async def main(n_users, n_iterations, endpoint):
     async with aiohttp.ClientSession() as session:
-        await simulate_users_messages_async(session, n_users, n_iterations)
+        await simulate_users_messages_async(session, n_users, n_iterations, endpoint)
 
 
-asyncio.run(main())
+#asyncio.run(main(4,4,"http://localhost:7071/api/Learnia_whatsapp"))
