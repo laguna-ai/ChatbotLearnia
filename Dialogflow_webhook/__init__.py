@@ -18,7 +18,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     try:
         history = request_json["sessionInfo"]["parameters"]["context"]
     except KeyError:
-        history = copy.deepcopy(history)
+        history = copy.deepcopy(sysPrompt)
         parameters = ["nombre", "procedencia", "organizacion"]
         questions = [
             "¿Cuál es tu nombre?",
