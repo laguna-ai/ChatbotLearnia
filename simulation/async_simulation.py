@@ -43,4 +43,4 @@ async def main(n_users, n_iterations, endpoint):
         await simulate_users_messages_async(session, n_users, n_iterations, endpoint)
 
 
-#asyncio.run(main(4,4,"http://localhost:7071/api/Learnia_whatsapp"))
+#asyncio.run(main(1,1,"http://localhost:7071/api/Learnia_whatsapp"))

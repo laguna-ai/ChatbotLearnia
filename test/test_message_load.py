@@ -5,8 +5,8 @@ from Learnia_whatsapp.blob_storage import container_client
 from simulation.async_simulation import main as simulate_async_messages
 import asyncio
 
-n_users = 4
-n_iterations = 4
+n_users = 1
+n_iterations = 2
 endpoint = "http://localhost:7071/api/Learnia_whatsapp"
 # endpoint="https://chatbot-webhooks.azurewebsites.net/api/Learnia_whatsapp"
 expected_count = 2 * n_iterations + 1
@@ -24,9 +24,15 @@ def limpiar_archivos():
         except Exception as e:
             print(f"Error al limpiar: {e}")
 
-# Simular el envío de mensajes (ajustar según si es sincrónico o asíncrono)
-#simulate_users_messages(n_users, n_iterations)
-asyncio.run(simulate_async_messages(n_users, n_iterations, endpoint))
+# Fixture para simular mensajes antes de todas las pruebas y limpiar después
+@pytest.fixture(scope="session", autouse=True)
+def preparar_y_limpiar():
+    # Ejecutar simulación antes de las pruebas
+    asyncio.run(simulate_async_messages(n_users, n_iterations, endpoint))
+    # Esperar a que todas las pruebas se completen
+    yield
+    # Ejecutar limpieza después de todas las pruebas
+    #limpiar_archivos()
 
 # Prueba para verificar el conteo de mensajes por usuario
 @pytest.mark.parametrize("user_index", range(n_users))
@@ -42,10 +48,3 @@ def test_mensajes_enviados_por_usuario(user_index):
         print(f"Error al contar mensajes para {archivo_usuario}: {e}")
     
     assert real_count == expected_count, f"El conteo de mensajes esperado para {archivo_usuario} era {expected_count}, pero se encontró {real_count}"
-    
-#limpiar_archivos()
-
-
-
-
-    

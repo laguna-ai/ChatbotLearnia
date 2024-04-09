@@ -48,9 +48,11 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info("Usuario: %s", message)
     logging.info("Chatbot: %s", respuesta_texto)
 
-    History, Usage = update_history(respuesta_texto, respuesta_uso, History, Usage)
+    # History, Usage = update_history(respuesta_texto, respuesta_uso, History, Usage)
 
-    update_blobs(blob, blob_usage, History, Usage)
+    # update_blobs(blob, blob_usage, History, Usage)
+
+    update_blobs(blob, blob_usage, message, respuesta_texto, respuesta_uso)
 
     #upload_list_sharepoint(tel, name, message, respuesta_texto)
 
