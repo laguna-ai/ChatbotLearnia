@@ -50,6 +50,6 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
     update_blobs(blob, blob_usage, message, respuesta_texto, respuesta_uso)
 
-    #upload_list_sharepoint(tel, name, message, respuesta_texto)
+    upload_list_sharepoint(tel, name, message, respuesta_texto)
 
     return func.HttpResponse("Success", status_code=200)
