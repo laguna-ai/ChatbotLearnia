@@ -8,7 +8,7 @@ from .request_manager import (
     manage_WA_format,
     get_personal_info,
 )
-from .conversation_manager import respond_message, update_history
+from .conversation_manager import respond_message
 from .blob_storage import get_blobs, prepare_history, update_blobs
 
 
