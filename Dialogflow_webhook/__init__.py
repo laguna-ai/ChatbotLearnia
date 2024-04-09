@@ -20,23 +20,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         history = request_json["sessionInfo"]["parameters"]["context"]
     except KeyError:
         history = copy.deepcopy(sysPrompt)
-        parameters = ["nombre", "procedencia", "organizacion"]
-        questions = [
-            "¿Cuál es tu nombre?",
-            "¡Gracias! ¿De qué país/ciudad nos escribes?",
-            "¿A qué Universidad / Empresa representas?",
-        ]
-        for i, p in enumerate(parameters):
-            history.append({"role": "assistant", "content": questions[i]})
-            var_p = request_json["sessionInfo"]["parameters"][p]
-            history.append({"role": "user", "content": var_p})
-        history.append(
-            {
-                "role": "assistant",
-                "content": "Gracias por compartirnos tus datos. ¿En qué te puedo ayudar?",
-            }
-        )
-
+        
     history.append({"role": "user", "content": prompt})
 
     # Respuesta del bot, añadir prompt_usuario y respuesta_bot al historial
