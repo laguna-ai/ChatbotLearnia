@@ -4,6 +4,7 @@ import random
 import time
 import json
 import os
+
 # Crear la clase Usuario
 
 basic_number = "57300554000"
@@ -11,6 +12,7 @@ basic_number = "57300554000"
 PHONE_ID = os.environ["PHONE_ID"]
 PHONE_NUMBER = "573202190464"
 identifier = "259154270612296"
+
 
 class Usuario:
     def __init__(self, name, phone):

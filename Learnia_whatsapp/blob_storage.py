@@ -3,7 +3,7 @@ import json
 from azure.core.exceptions import ResourceNotFoundError
 import logging
 from RAG.SysPrompt import sysPrompt
-import copy 
+import copy
 from RAG.calculo_costos import openai_api_calculate_cost
 
 ################################################################################################
@@ -25,7 +25,6 @@ def get_blobs(tel):
 def prepare_history(blob, blob_usage):
     try:
         History = json.loads(blob.download_blob(encoding="utf-8").readall())
-        Usage = json.loads(blob_usage.download_blob(encoding="utf-8").readall())
     except ResourceNotFoundError as e:
         History = copy.deepcopy(sysPrompt)
         Usage = {"prompt_tokens": 0, "completion_tokens": 0, "total_cost": 0}
@@ -34,8 +33,8 @@ def prepare_history(blob, blob_usage):
         upload_blobs(blob, blob_usage, History, Usage)
     else:
         welcome = False
-    
-    return History, Usage, welcome
+
+    return History, welcome
 
 
 # def update_blobs(blob, blob_usage, History, Usage):
@@ -44,10 +43,10 @@ def prepare_history(blob, blob_usage):
 
 
 def update_blobs(blob, blob_usage, message, respuesta_texto, respuesta_uso):
-    
+
     History = json.loads(blob.download_blob(encoding="utf-8").readall())
     Usage = json.loads(blob_usage.download_blob(encoding="utf-8").readall())
-    
+
     History.append({"role": "user", "content": message})
     History.append({"role": "assistant", "content": respuesta_texto})
     Usage["prompt_tokens"] += respuesta_uso.prompt_tokens
@@ -55,6 +54,7 @@ def update_blobs(blob, blob_usage, message, respuesta_texto, respuesta_uso):
     Usage["total_cost"] += openai_api_calculate_cost(respuesta_uso)
 
     upload_blobs(blob, blob_usage, History, Usage)
+
 
 def upload_blobs(blob, blob_usage, History, Usage):
     blob.upload_blob(json.dumps(History), overwrite=True)

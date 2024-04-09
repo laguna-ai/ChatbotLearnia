@@ -7,6 +7,7 @@ from RAG.Chat_Response import get_completion_from_messages, plantilla_sys
 from azure.core.exceptions import ResourceNotFoundError, HttpResponseError
 import copy
 
+
 def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info("Python HTTP trigger function processed a request.")
 

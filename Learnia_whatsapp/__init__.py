@@ -22,7 +22,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     # Get JSON of data
     info = req.get_json()
     value = info["entry"][0]["changes"][0]["value"]
-    logging.info(f'## JSON CONTENTS ## : {info}')
+    # logging.info(f'## JSON CONTENTS ## : {info}')
 
     # Managment of status messages from WA (delivered, sent, received, etc).
     status_response = manage_WA_status(value)
@@ -39,7 +39,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
     blob, blob_usage = get_blobs(tel)
 
-    History, Usage, welcome = prepare_history(blob, blob_usage)
+    History, welcome = prepare_history(blob, blob_usage)
 
     respuesta_texto, respuesta_uso, History = respond_message(message, History)
 
@@ -48,12 +48,8 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info("Usuario: %s", message)
     logging.info("Chatbot: %s", respuesta_texto)
 
-    # History, Usage = update_history(respuesta_texto, respuesta_uso, History, Usage)
-
-    # update_blobs(blob, blob_usage, History, Usage)
-
     update_blobs(blob, blob_usage, message, respuesta_texto, respuesta_uso)
 
-    #upload_list_sharepoint(tel, name, message, respuesta_texto)
+    upload_list_sharepoint(tel, name, message, respuesta_texto)
 
     return func.HttpResponse("Success", status_code=200)
