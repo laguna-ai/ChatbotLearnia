@@ -20,7 +20,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         history = request_json["sessionInfo"]["parameters"]["context"]
     except KeyError:
         history = copy.deepcopy(sysPrompt)
-        
+
     history.append({"role": "user", "content": prompt})
 
     # Respuesta del bot, añadir prompt_usuario y respuesta_bot al historial
