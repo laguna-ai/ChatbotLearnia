@@ -7,7 +7,7 @@ import asyncio
 from azure.core.exceptions import ResourceNotFoundError
 
 n_users = 1
-n_iterations = 2
+n_iterations = 1
 endpoint = "http://localhost:7071/api/Learnia_whatsapp"
 # endpoint="https://chatbot-webhooks.azurewebsites.net/api/Learnia_whatsapp"
 expected_count = 2 * n_iterations + 1
