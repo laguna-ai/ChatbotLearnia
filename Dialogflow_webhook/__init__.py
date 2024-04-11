@@ -1,57 +1,24 @@
 import logging
 import azure.functions as func
-import json
-from RAG.index_query import get_docs
-from RAG.SysPrompt import sysPrompt
-from RAG.Chat_Response import get_completion_from_messages, plantilla_sys
-from azure.core.exceptions import ResourceNotFoundError, HttpResponseError
-import copy
+from RAG.conversation_manager import respond_message
+from Postgres.postgres import create_postgres_connection, upsert_session_history
+from .request_manager import get_personal_info, prepare_history, create_webhook_response
 
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info("Python HTTP trigger function processed a request.")
 
-    # Get JSON of data
     request_json = req.get_json()
-    logging.info("## JSON CONTENTS ##: %s", str(request_json))
-    prompt = request_json["text"]
-
-    try:
-        history = request_json["sessionInfo"]["parameters"]["context"]
-    except KeyError:
-        history = copy.deepcopy(sysPrompt)
-
-    history.append({"role": "user", "content": prompt})
-
-    # Respuesta del bot, añadir prompt_usuario y respuesta_bot al historial
-    context = get_docs(prompt)
-    history.append({"role": "system", "content": plantilla_sys(context)})
-
-    try:
-        respuesta = get_completion_from_messages(history)[0]
-        history.pop()  # delete the context prompt
-        history.append({"role": "assistant", "content": respuesta})
-
-    except HttpResponseError as e:
-        respuesta = "Error en el llamado a openAI: " + str(e)
-
-    # logging.info(f'## Historial ## : {History}')
+    prompt, session_id = get_personal_info(request_json)
+    history = prepare_history(request_json)
+    respuesta, history = respond_message(prompt, history)
 
     logging.info("Usuario: %s", prompt)
     logging.info("Chatbot: %s", respuesta)
 
-    # Construimos la respuesta JSON manualmente y la retornamos usando func.HttpResponse
-    response_body = json.dumps(
-        {
-            "sessionInfo": {
-                "parameters": {
-                    "context": history,
-                }
-            },
-            "fulfillmentResponse": {"messages": [{"text": {"text": [respuesta]}}]},
-        }
-    )
+    with create_postgres_connection() as conn:
+        upsert_session_history(conn, session_id, history)
 
-    return func.HttpResponse(
-        body=response_body, status_code=200, mimetype="application/json"
-    )
+    res = create_webhook_response(respuesta, history)
+
+    return res
