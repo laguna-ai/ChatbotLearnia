@@ -57,7 +57,7 @@ def find_or_create_session(conn, tel):
         return session[1], welcome # 1 for history
 
 
-def update_session(conn, session_id, new_messages):
+def update_session(conn, tel, new_messages):
 
     new_messages_json = json.dumps(new_messages)
 
@@ -69,10 +69,27 @@ def update_session(conn, session_id, new_messages):
         WHERE id = %s
         """
 
-        cur.execute(query, (new_messages_json, session_id))
+        cur.execute(query, (new_messages_json, tel))
         conn.commit()
 
 
+# For Dialogflow CX webhook
+def upsert_session_history(conn, session_id, history):
+    with conn.cursor() as cur:
+        # Preparar el historial como JSONB para insertarlo o actualizarlo
+        history_json = json.dumps(history)
+
+        # Query para hacer upsert en la tabla 'sessions'
+        query = """
+        INSERT INTO sessions (id, history)
+        VALUES (%s, %s::jsonb)
+        ON CONFLICT (id)
+        DO UPDATE SET history = %s::jsonb
+        RETURNING *;
+        """
+
+        cur.execute(query, (session_id, history_json, history_json))
+        conn.commit()
 
 
 

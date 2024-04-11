@@ -6,6 +6,7 @@ from RAG.SysPrompt import sysPrompt
 from RAG.Chat_Response import get_completion_from_messages, plantilla_sys
 from azure.core.exceptions import ResourceNotFoundError, HttpResponseError
 import copy
+from Postgres.postgres import create_postgres_connection, upsert_session_history
 
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
@@ -15,6 +16,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     request_json = req.get_json()
     logging.info("## JSON CONTENTS ##: %s", str(request_json))
     prompt = request_json["text"]
+    session_id= request_json["sessionInfo"]["session"].split('/')[-1]
 
     try:
         history = request_json["sessionInfo"]["parameters"]["context"]
@@ -51,7 +53,10 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             "fulfillmentResponse": {"messages": [{"text": {"text": [respuesta]}}]},
         }
     )
-
+    
+    with create_postgres_connection() as conn:
+        upsert_session_history(conn, session_id, history)
+    
     return func.HttpResponse(
         body=response_body, status_code=200, mimetype="application/json"
     )

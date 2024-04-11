@@ -8,8 +8,7 @@ from .request_manager import (
     get_personal_info,
 )
 from .conversation_manager import respond_message
-from .postgres import create_postgres_connection, find_or_create_session, update_session
-
+from Postgres.postgres import create_postgres_connection, find_or_create_session, update_session
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
 
@@ -34,13 +33,13 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     if format_response:
         return status_response
 
-    tel, message, name = get_personal_info(messages, value)
+    tel, message = get_personal_info(messages, value)
 
     conn = create_postgres_connection()
 
     History, welcome = find_or_create_session(conn,tel)
     
-    respuesta_texto, respuesta_uso, History = respond_message(message, History)
+    respuesta_texto, History = respond_message(message, History)
 
     sendWA(respuesta_texto, tel, welcome)
 
