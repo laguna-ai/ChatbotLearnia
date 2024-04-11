@@ -16,7 +16,7 @@ expected_count = 2 * n_iterations + 1
 
 
 ENDPOINT = "https://learnia-cosmos.documents.azure.com:443/"
-KEY = os.environ["COSMOS_DB_KEY"]
+#KEY = os.environ["COSMOS_DB_KEY"]
 DATABASE_NAME = "learniaDB"
 CONTAINER_NAME = "sessions"
 
