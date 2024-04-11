@@ -1,7 +1,6 @@
 import logging
 import azure.functions as func
 from .SendWA import sendWA
-from .List_Sharepoint import upload_list_sharepoint
 from .request_manager import (
     setup_Meta_webhook,
     manage_WA_status,
@@ -9,7 +8,7 @@ from .request_manager import (
     get_personal_info,
 )
 from .conversation_manager import respond_message
-from .blob_storage import get_blobs, prepare_history, update_blobs
+from .cosmosDB import get_cosmos_container, find_or_create_session, update_session
 
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
@@ -37,19 +36,17 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
     tel, message, name = get_personal_info(messages, value)
 
-    blob, blob_usage = get_blobs(tel)
+    container=get_cosmos_container()
 
-    History, welcome = prepare_history(blob, blob_usage)
-
+    History, welcome = find_or_create_session(container,tel)
+    
     respuesta_texto, respuesta_uso, History = respond_message(message, History)
 
     sendWA(respuesta_texto, tel, welcome)
 
     logging.info("Usuario: %s", message)
     logging.info("Chatbot: %s", respuesta_texto)
-
-    update_blobs(blob, blob_usage, message, respuesta_texto, respuesta_uso)
-
-    upload_list_sharepoint(tel, name, message, respuesta_texto)
+    
+    update_session(container, tel, History[-2:])
 
     return func.HttpResponse("Success", status_code=200)

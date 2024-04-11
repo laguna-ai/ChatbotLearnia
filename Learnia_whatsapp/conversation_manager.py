@@ -25,4 +25,6 @@ def respond_message(message, History):
             "Error en el llamado a openAI: " + str(e)
         )
     History.pop()  # delete the context prompt
+    History.append({"role": "assistant", "content": respuesta_texto})
+    
     return respuesta_texto, respuesta_uso, History

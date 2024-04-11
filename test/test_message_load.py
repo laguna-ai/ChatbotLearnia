@@ -1,31 +1,47 @@
 import pytest
 import json
 from simulation.user_messages import basic_number
-from Learnia_whatsapp.blob_storage import container_client
+from Learnia_whatsapp.cosmosDB import get_cosmos_container
 from simulation.async_simulation import main as simulate_async_messages
 import asyncio
 from azure.core.exceptions import ResourceNotFoundError
+from azure.cosmos import CosmosClient, exceptions
 
 n_users = 1
-n_iterations = 1
+n_iterations = 2
 endpoint = "http://localhost:7071/api/Learnia_whatsapp"
 # endpoint="https://chatbot-webhooks.azurewebsites.net/api/Learnia_whatsapp"
 expected_count = 2 * n_iterations + 1
 
+
+
+ENDPOINT = "https://learnia-cosmos.documents.azure.com:443/"
+KEY = "lMM1jRK7Sq0WgqZ9QVeHeAQ406JMjhp9Kq9fPHONLxKZ4FpzGiRSChnGO4QBqc1AR0RbgT1prCe9ACDbZ88tCQ=="
+DATABASE_NAME = "learniaDB"
+CONTAINER_NAME = "sessions"
+
+
+# Inicializa el cliente de Cosmos DB con el endpoint y la llave proporcionados
+client = CosmosClient(ENDPOINT, KEY)
+# Obtiene el cliente de la base de datos específica
+database = client.get_database_client(DATABASE_NAME)
+# Obtiene el cliente del contenedor específico
+container = database.get_container_client(CONTAINER_NAME)
+
 # Función de limpieza para ser llamada después de cada prueba
 
 
-def limpiar_archivos():
-    for i in range(n_users):
-        archivo_usuario = f"{basic_number}{i}.txt"
-        archivo_usuario_tmp = f"{basic_number}{i}$.txt"
-        try:
-            blob = container_client.get_blob_client(archivo_usuario)
-            blob.delete_blob()
-            blob_tmp = container_client.get_blob_client(archivo_usuario_tmp)
-            blob_tmp.delete_blob()
-        except ResourceNotFoundError as e:
-            print(f"Error al limpiar el blob: {e}")
+# def limpiar_archivos():
+#     for i in range(n_users):
+#         archivo_usuario = f"{basic_number}{i}.txt"
+#         archivo_usuario_tmp = f"{basic_number}{i}$.txt"
+#         try:
+#             blob = container_client.get_blob_client(archivo_usuario)
+#             blob.delete_blob()
+#             blob_tmp = container_client.get_blob_client(archivo_usuario_tmp)
+#             blob_tmp.delete_blob()
+#         except ResourceNotFoundError as e:
+#             print(f"Error al limpiar el blob: {e}")
 
 
 # Fixture para simular mensajes antes de todas las pruebas y limpiar después
@@ -42,20 +58,23 @@ def preparar_y_limpiar():
 
 
 # Prueba para verificar el conteo de mensajes por usuario
-
+#container=get_cosmos_container()
 
 @pytest.mark.parametrize("user_index", range(n_users))
 def test_mensajes_enviados_por_usuario(user_index):
     # Conteo de mensajes para el usuario actual
-    archivo_usuario = f"{basic_number}{user_index}.txt"
-    blob = container_client.get_blob_client(archivo_usuario)
+    tel = f"{basic_number}{user_index}"
+    
+    
+   
     try:
-        history = json.loads(blob.download_blob(encoding="utf-8").readall())
+        session = container.read_item(item=tel, partition_key="active")
+        history = session["history"]
         real_count = len(history)
     except ResourceNotFoundError as e:
         real_count = 0
-        print(f"Error al contar mensajes para {archivo_usuario}: {e}")
+        print(f"Error al contar mensajes para {tel}: {e}")
 
     assert (
         real_count == expected_count
-    ), f"El conteo de mensajes esperado para {archivo_usuario} era {expected_count}, pero se encontró {real_count}"
+    ), f"El conteo de mensajes esperado para {tel} era {expected_count}, pero se encontró {real_count}"
