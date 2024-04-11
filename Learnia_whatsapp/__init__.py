@@ -7,7 +7,7 @@ from .request_manager import (
     manage_WA_format,
     get_personal_info,
 )
-from .conversation_manager import respond_message
+from RAG.conversation_manager import respond_message
 from Postgres.postgres import create_postgres_connection, find_or_create_session, update_session
 
 def main(req: func.HttpRequest) -> func.HttpResponse:

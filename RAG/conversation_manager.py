@@ -1,6 +1,6 @@
 from azure.core.exceptions import HttpResponseError
-from RAG.index_query import get_docs
-from RAG.Chat_Response import get_completion_from_messages, plantilla_sys
+from .index_query import get_docs
+from .Chat_Response import get_completion_from_messages, plantilla_sys
 
 
 def respond_message(message, History):
