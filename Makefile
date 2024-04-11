@@ -12,6 +12,7 @@ format:
 	autopep8 --in-place --recursive RAG/
 	autopep8 --in-place --recursive simulation/
 	autopep8 --in-place --recursive test/
+	autopep8 --in-place --Postgres/
 	black Learnia_whatsapp/
 	black delete_blobs/
 	black delete_blobs/
@@ -19,6 +20,7 @@ format:
 	black RAG/
 	black simulation/
 	black test/
+	black Postgres
 
 lint:
 	pylint --disable=R,C Learnia_whatsapp/*.py
@@ -27,5 +29,6 @@ lint:
 	pylint --disable=R,C RAG/*py
 	pylint --disable=R,C simulation/*py
 	pylint --disable=R,C test/*py
+	pylint --disable=R,C Postgres/*py
 
 all: install lint
