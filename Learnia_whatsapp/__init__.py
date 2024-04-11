@@ -33,7 +33,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     if format_response:
         return status_response
 
-    tel, message = get_personal_info(messages, value)
+    tel, message = get_personal_info(messages)
 
     conn = create_postgres_connection()
 
