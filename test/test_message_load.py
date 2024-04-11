@@ -6,7 +6,7 @@ from simulation.async_simulation import main as simulate_async_messages
 import asyncio
 from azure.core.exceptions import ResourceNotFoundError
 from azure.cosmos import CosmosClient, exceptions
-
+import os
 n_users = 1
 n_iterations = 2
 endpoint = "http://localhost:7071/api/Learnia_whatsapp"
@@ -16,7 +16,7 @@ expected_count = 2 * n_iterations + 1
 
 
 ENDPOINT = "https://learnia-cosmos.documents.azure.com:443/"
-KEY = "lMM1jRK7Sq0WgqZ9QVeHeAQ406JMjhp9Kq9fPHONLxKZ4FpzGiRSChnGO4QBqc1AR0RbgT1prCe9ACDbZ88tCQ=="
+KEY = os.environ["COSMOS_DB_KEY"]
 DATABASE_NAME = "learniaDB"
 CONTAINER_NAME = "sessions"
 
