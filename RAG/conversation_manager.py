@@ -15,8 +15,8 @@ def respond_message(message, History):
 
     except HttpResponseError as e:
         respuesta_texto = "Error en el llamado a openAI: " + str(e)
-        
+
     History.pop()  # delete the context prompt
     History.append({"role": "assistant", "content": respuesta_texto})
-    
+
     return respuesta_texto, History

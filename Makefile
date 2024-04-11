@@ -12,7 +12,7 @@ format:
 	autopep8 --in-place --recursive RAG/
 	autopep8 --in-place --recursive simulation/
 	autopep8 --in-place --recursive test/
-	autopep8 --in-place --Postgres/
+	autopep8 --in-place --recursive Postgres/
 	black Learnia_whatsapp/
 	black delete_blobs/
 	black delete_blobs/

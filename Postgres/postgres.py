@@ -1,4 +1,3 @@
-import time
 import json
 from RAG.SysPrompt import sysPrompt
 import os
@@ -54,7 +53,7 @@ def find_or_create_session(conn, tel):
 
         conn.commit()
 
-        return session[1], welcome # 1 for history
+        return session[1], welcome  # 1 for history
 
 
 def update_session(conn, tel, new_messages):
@@ -90,19 +89,3 @@ def upsert_session_history(conn, session_id, history):
 
         cur.execute(query, (session_id, history_json, history_json))
         conn.commit()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

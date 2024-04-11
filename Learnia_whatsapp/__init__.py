@@ -8,7 +8,12 @@ from .request_manager import (
     get_personal_info,
 )
 from RAG.conversation_manager import respond_message
-from Postgres.postgres import create_postgres_connection, find_or_create_session, update_session
+from Postgres.postgres import (
+    create_postgres_connection,
+    find_or_create_session,
+    update_session,
+)
+
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
 
@@ -37,17 +42,17 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
     conn = create_postgres_connection()
 
-    History, welcome = find_or_create_session(conn,tel)
-    
+    History, welcome = find_or_create_session(conn, tel)
+
     respuesta_texto, History = respond_message(message, History)
 
     sendWA(respuesta_texto, tel, welcome)
 
     logging.info("Usuario: %s", message)
     logging.info("Chatbot: %s", respuesta_texto)
-    
+
     update_session(conn, tel, History[-2:])
-    
+
     conn.close()
 
     return func.HttpResponse("Success", status_code=200)

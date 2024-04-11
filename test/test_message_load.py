@@ -21,31 +21,37 @@ def preparar_y_limpiar():
     # Ejecutar limpieza después de todas las pruebas
     # limpiar_archivos()
 
+
 def test_mensajes_enviados_por_usuario():
     # Generar todos los números de teléfono
-    telefonos = [f"{basic_number}{i}" for i in range(n_users)] 
+    telefonos = [f"{basic_number}{i}" for i in range(n_users)]
 
     # Conectar a la base de datos
     conn = get_connection()
-  
+
     with conn.cursor() as cur:
         # Ejecutar una sola consulta usando ANY para obtener los conteos de todos los números
-        cur.execute("""
+        cur.execute(
+            """
             SELECT history
             FROM sessions 
             WHERE id = ANY(%s) 
-        """, (telefonos,))
+        """,
+            (telefonos,),
+        )
         results = cur.fetchall()
 
         # Asegurar que cada teléfono tenga el conteo esperado
-        i=0
+        i = 0
         for r in results:
-            history=r[0]
-            count=len(history)
-            
-            assert count == expected_count, f"El conteo de mensajes esperado para {i} era {expected_count}, pero se encontró {count}"
-            i+=1
-        
+            history = r[0]
+            count = len(history)
+
+            assert (
+                count == expected_count
+            ), f"El conteo de mensajes esperado para {i} era {expected_count}, pero se encontró {count}"
+            i += 1
+
         consulta_borrado = "DELETE FROM sessions WHERE id = ANY(%s);"
         cur.execute(consulta_borrado, (telefonos,))
         conn.commit()

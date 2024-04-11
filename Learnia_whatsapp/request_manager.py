@@ -33,5 +33,5 @@ def manage_WA_format(messages):
 def get_personal_info(messages):
     tel = messages["from"]
     message = messages["text"]["body"]
-    #name = value["contacts"][0]["profile"]["name"]
-    return tel, message#, name
+    # name = value["contacts"][0]["profile"]["name"]
+    return tel, message  # , name
