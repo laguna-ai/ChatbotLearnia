@@ -1,32 +1,19 @@
 import pytest
 import json
 from simulation.user_messages import basic_number
-from Learnia_whatsapp.cosmosDB import get_cosmos_container
+from Learnia_whatsapp.postgres import create_postgres_connection as get_connection
 from simulation.async_simulation import main as simulate_async_messages
 import asyncio
 from azure.core.exceptions import ResourceNotFoundError
 from azure.cosmos import CosmosClient, exceptions
 import os
-n_users = 1
-n_iterations = 2
+n_users = 5
+n_iterations = 5
 endpoint = "http://localhost:7071/api/Learnia_whatsapp"
 # endpoint="https://chatbot-webhooks.azurewebsites.net/api/Learnia_whatsapp"
 expected_count = 2 * n_iterations + 1
 
 
-
-ENDPOINT = "https://learnia-cosmos.documents.azure.com:443/"
-KEY = os.environ["COSMOS_DB_KEY"]
-DATABASE_NAME = "learniaDB"
-CONTAINER_NAME = "sessions"
-
-
-# Inicializa el cliente de Cosmos DB con el endpoint y la llave proporcionados
-client = CosmosClient(ENDPOINT, KEY)
-# Obtiene el cliente de la base de datos específica
-database = client.get_database_client(DATABASE_NAME)
-# Obtiene el cliente del contenedor específico
-container = database.get_container_client(CONTAINER_NAME)
 
 # Función de limpieza para ser llamada después de cada prueba
 
@@ -56,25 +43,31 @@ def preparar_y_limpiar():
     # Ejecutar limpieza después de todas las pruebas
     # limpiar_archivos()
 
+def test_mensajes_enviados_por_usuario():
+    # Generar todos los números de teléfono
+    telefonos = [f"{basic_number}{i}" for i in range(n_users)] 
 
-# Prueba para verificar el conteo de mensajes por usuario
-#container=get_cosmos_container()
+    # Conectar a la base de datos
+    conn = get_connection()
+  
+    with conn.cursor() as cur:
+        # Ejecutar una sola consulta usando ANY para obtener los conteos de todos los números
+        cur.execute("""
+            SELECT history
+            FROM sessions 
+            WHERE id = ANY(%s) 
+        """, (telefonos,))
+        results = cur.fetchall()
 
-@pytest.mark.parametrize("user_index", range(n_users))
-def test_mensajes_enviados_por_usuario(user_index):
-    # Conteo de mensajes para el usuario actual
-    tel = f"{basic_number}{user_index}"
-    
-    
-   
-    try:
-        session = container.read_item(item=tel, partition_key="active")
-        history = session["history"]
-        real_count = len(history)
-    except ResourceNotFoundError as e:
-        real_count = 0
-        print(f"Error al contar mensajes para {tel}: {e}")
-
-    assert (
-        real_count == expected_count
-    ), f"El conteo de mensajes esperado para {tel} era {expected_count}, pero se encontró {real_count}"
+        # Asegurar que cada teléfono tenga el conteo esperado
+        i=0
+        for r in results:
+            history=r[0]
+            count=len(history)
+            
+            assert count == expected_count, f"El conteo de mensajes esperado para {i} era {expected_count}, pero se encontró {count}"
+            i+=1
+        
+        consulta_borrado = "DELETE FROM sessions WHERE id = ANY(%s);"
+        cur.execute(consulta_borrado, (telefonos,))
+        conn.commit()

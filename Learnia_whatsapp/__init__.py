@@ -8,7 +8,7 @@ from .request_manager import (
     get_personal_info,
 )
 from .conversation_manager import respond_message
-from .cosmosDB import get_cosmos_container, find_or_create_session, update_session
+from .postgres import create_postgres_connection, find_or_create_session, update_session
 
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
@@ -36,9 +36,9 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
     tel, message, name = get_personal_info(messages, value)
 
-    container=get_cosmos_container()
+    conn = create_postgres_connection()
 
-    History, welcome = find_or_create_session(container,tel)
+    History, welcome = find_or_create_session(conn,tel)
     
     respuesta_texto, respuesta_uso, History = respond_message(message, History)
 
@@ -47,6 +47,8 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info("Usuario: %s", message)
     logging.info("Chatbot: %s", respuesta_texto)
     
-    update_session(container, tel, History[-2:])
+    update_session(conn, tel, History[-2:])
+    
+    conn.close()
 
     return func.HttpResponse("Success", status_code=200)
