@@ -20,7 +20,7 @@ format:
 	black RAG/
 	black simulation/
 	black test/
-	black Postgres
+	black Postgres/
 
 lint:
 	pylint --disable=R,C Learnia_whatsapp/*.py
