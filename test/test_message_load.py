@@ -1,7 +1,7 @@
 import pytest
 import json
 from simulation.user_messages import basic_number
-from Learnia_whatsapp.postgres import create_postgres_connection as get_connection
+from Postgres.postgres import create_postgres_connection as get_connection
 from simulation.async_simulation import main as simulate_async_messages
 import asyncio
 from azure.core.exceptions import ResourceNotFoundError
