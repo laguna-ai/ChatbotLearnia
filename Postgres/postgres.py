@@ -2,7 +2,7 @@ import json
 from RAG.SysPrompt import sysPrompt
 import os
 import psycopg2
-
+import time
 
 def create_postgres_connection():
     # open database connection
@@ -20,21 +20,23 @@ def create_postgres_connection():
 
 def find_or_create_session(conn, tel):
     with conn.cursor() as cur:
-        # Consulta unificada usando CTEs para manejar la lógica de usuario y sesión
+        # Consulta unificada usando CTEs para manejar la lógica de sesión
         query = """
-        INSERT INTO sessions (id, history)
+        INSERT INTO sessions (id, history, created_at)
         SELECT 
-            %s, %s
+            %s, %s, to_timestamp(%s)
         WHERE NOT EXISTS (
             SELECT 1 FROM sessions WHERE id = %s
         )
         ON CONFLICT (id) DO NOTHING
         RETURNING *;
         """
+        timestamp = time.time()
 
         params = (
             tel,
             json.dumps(sysPrompt),
+            timestamp,
             tel,
         )
 
@@ -80,12 +82,13 @@ def upsert_session_history(conn, session_id, history):
 
         # Query para hacer upsert en la tabla 'sessions'
         query = """
-        INSERT INTO sessions (id, history)
-        VALUES (%s, %s::jsonb)
+        INSERT INTO sessions (id, history, created_at)
+        VALUES (%s, %s::jsonb, to_timestamp(%s))
         ON CONFLICT (id)
         DO UPDATE SET history = %s::jsonb
         RETURNING *;
         """
+        timestamp = time.time()
 
-        cur.execute(query, (session_id, history_json, history_json))
+        cur.execute(query, (session_id, history_json, timestamp, history_json))
         conn.commit()
