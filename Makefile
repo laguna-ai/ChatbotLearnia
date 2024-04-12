@@ -7,15 +7,14 @@ tests:
 
 format:
 	autopep8 --in-place --recursive Learnia_whatsapp/
-	autopep8 --in-place --recursive delete_blobs/
+	autopep8 --in-place --recursive finish_sessions/
 	autopep8 --in-place --recursive Dialogflow_webhook/
 	autopep8 --in-place --recursive RAG/
 	autopep8 --in-place --recursive simulation/
 	autopep8 --in-place --recursive test/
 	autopep8 --in-place --recursive Postgres/
 	black Learnia_whatsapp/
-	black delete_blobs/
-	black delete_blobs/
+	black finish_sessions/
 	black Dialogflow_webhook/
 	black RAG/
 	black simulation/
@@ -24,7 +23,7 @@ format:
 
 lint:
 	pylint --disable=R,C Learnia_whatsapp/*.py
-	pylint --disable=R,C delete_blobs/*.py
+	pylint --disable=R,C finish_sessions/*.py
 	pylint --disable=R,C Dialogflow_webhook/*.py
 	pylint --disable=R,C RAG/*py
 	pylint --disable=R,C simulation/*py
