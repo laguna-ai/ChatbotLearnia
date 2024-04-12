@@ -75,8 +75,8 @@ message_bank = [
     "¿Qué tipo de soporte técnico o de capacitación ofrecen durante y después de la implementación de los contenidos virtualizados?",
     "¿Cómo se gestionan los derechos de autor y la propiedad intelectual de los contenidos desarrollados?",
     "¿Pueden integrar los contenidos desarrollados con sistemas de gestión del aprendizaje (LMS) existentes en nuestra universidad?",
-    "¿Qué medidas de accesibilidad y diseño inclusivo aplican a los contenidos desarrollados para garantizar la igualdad de oportunidades?"
-    ]
+    "¿Qué medidas de accesibilidad y diseño inclusivo aplican a los contenidos desarrollados para garantizar la igualdad de oportunidades?",
+]
 
 # Función para simular usuarios y mensajes
 

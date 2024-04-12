@@ -16,15 +16,11 @@ def auth_sharepoint():
     sp_context.execute_query()
     return sp_context
 
-context=auth_sharepoint()
+
+context = auth_sharepoint()
+
 
 def add_to_Sharepoint_list(analysis):
-    list = context.web.lists.get_by_title(
-        "chatbot_insights"
-    )  # CONECTAMOS A LA LISTA
-    list.add_item(analysis)
-    list.execute_query()
-
-
-
-
+    List = context.web.lists.get_by_title("chatbot_insights")  # CONECTAMOS A LA LISTA
+    List.add_item(analysis)
+    List.execute_query()

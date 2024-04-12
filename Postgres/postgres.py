@@ -4,6 +4,7 @@ import os
 import psycopg2
 import time
 
+
 def create_postgres_connection():
     # open database connection
     PASSWORD = os.environ["POSTGRES_PASS"]

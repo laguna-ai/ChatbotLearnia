@@ -2,6 +2,8 @@ import datetime
 import time
 
 # funciones de time trigger
+
+
 def get_sessions_to_finish(conn):
 
     # Calcula la fecha límite para las sesiones activas (18 horas antes de ahora)
@@ -17,6 +19,7 @@ def get_sessions_to_finish(conn):
         sessions_to_update = cur.fetchall()
 
     return sessions_to_update
+
 
 def finish_session(conn, session):
     ID = session[0]

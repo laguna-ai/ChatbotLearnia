@@ -52,6 +52,6 @@ def test_mensajes_enviados_por_usuario():
             ), f"El conteo de mensajes esperado para {i} era {expected_count}, pero se encontró {count}"
             i += 1
 
-        #consulta_borrado = "DELETE FROM sessions WHERE id = ANY(%s);"
-        #cur.execute(consulta_borrado, (telefonos,))
+        # consulta_borrado = "DELETE FROM sessions WHERE id = ANY(%s);"
+        # cur.execute(consulta_borrado, (telefonos,))
         conn.commit()
