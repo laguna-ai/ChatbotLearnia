@@ -61,27 +61,22 @@ class Usuario:
 
 # Banco de mensajes predefinidos
 message_bank = [
-    "Como descargo los resultados del test?",
-    "para que sirven las rutas ?",
-    "cómo hago para inscribirme en la plataforma?",
-    "Cuales son las habilidades?",
-    "Cuales son los perfiles?",
-    "como se presenta el test",
-    "donde veo los resultados",
-    "Qué son los perfiles?",
-    "quiero saber cómo realizar una ruta ?",
-    "donde puedo ver las rutas asignadas",
-    "que es boldinn",
-    "como reseteo mi contraseña",
-    "cuantos diagnosticos debo presentar",
-    "¿Cómo agrego un usuario a un equipo?",
-    "que mide el diagnostico individual",
-    "que es un desafio",
-    "como asigno una ruta",
-    "qué es Boldinn?",
-    "Cómo funciona Boldinn?",
-    "Sabes de que se trata la habilidad de liderar?",
-]
+    "¿Qué servicios ofrecen para virtualizar programas universitarios?",
+    "¿Cuál es el proceso de desarrollo de contenidos a medida para una universidad?",
+    "¿Cómo funciona el proceso de adaptación de contenidos existentes para una universidad específica?",
+    "¿Qué tipo de contenidos pueden desarrollar para programas universitarios?",
+    "¿Tienen experiencia previa en la virtualización de programas específicos o en ciertas áreas de estudio?",
+    "¿Cuál es el tiempo estimado de entrega para el desarrollo de contenidos a medida?",
+    "¿Cuál es el costo asociado con el desarrollo de contenidos a medida o la adaptación de contenidos existentes?",
+    "¿Qué tecnologías o plataformas utilizan para la virtualización de programas universitarios?",
+    "¿Cómo se garantiza la calidad y la actualización de los contenidos desarrollados?",
+    "¿Ofrecen servicios de consultoría para ayudar a las universidades a diseñar su estrategia de virtualización de programas?",
+    "¿Qué recursos o materiales necesitamos proporcionar como universidad para el desarrollo de contenidos?",
+    "¿Qué tipo de soporte técnico o de capacitación ofrecen durante y después de la implementación de los contenidos virtualizados?",
+    "¿Cómo se gestionan los derechos de autor y la propiedad intelectual de los contenidos desarrollados?",
+    "¿Pueden integrar los contenidos desarrollados con sistemas de gestión del aprendizaje (LMS) existentes en nuestra universidad?",
+    "¿Qué medidas de accesibilidad y diseño inclusivo aplican a los contenidos desarrollados para garantizar la igualdad de oportunidades?"
+    ]
 
 # Función para simular usuarios y mensajes
 
