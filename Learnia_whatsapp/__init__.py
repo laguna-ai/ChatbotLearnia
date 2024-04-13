@@ -44,14 +44,14 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
     History, welcome = find_or_create_session(conn, tel)
 
-    respuesta_texto, History = respond_message(message, History)
+    respuesta_texto, new_messages = respond_message(message, History)
 
     sendWA(respuesta_texto, tel, welcome)
 
     logging.info("Usuario: %s", message)
     logging.info("Chatbot: %s", respuesta_texto)
 
-    update_session(conn, tel, History[-2:])
+    update_session(conn, tel, new_messages)
 
     conn.close()
 

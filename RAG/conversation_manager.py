@@ -18,5 +18,7 @@ def respond_message(message, History):
 
     History.pop()  # delete the context prompt
     History.append({"role": "assistant", "content": respuesta_texto})
+    
+    new_messages =History[-2:]
 
-    return respuesta_texto, History
+    return respuesta_texto, new_messages
