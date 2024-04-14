@@ -43,8 +43,8 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         History, welcome = find_or_create_session(conn, tel)
         respuesta_texto, new_messages = respond_message(message, History)
         sendWA(respuesta_texto, tel, welcome)
-        #logging.info("Usuario: %s", message)
-        #logging.info("Chatbot: %s", respuesta_texto)
+        # logging.info("Usuario: %s", message)
+        # logging.info("Chatbot: %s", respuesta_texto)
         update_session(conn, tel, new_messages)
 
     return func.HttpResponse("Success", status_code=200)
