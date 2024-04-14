@@ -1,4 +1,3 @@
-import logging
 import azure.functions as func
 from .SendWA import sendWA
 from .request_manager import (
@@ -40,19 +39,12 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
     tel, message = get_personal_info(messages)
 
-    conn = create_postgres_connection()
-
-    History, welcome = find_or_create_session(conn, tel)
-
-    respuesta_texto, new_messages = respond_message(message, History)
-
-    sendWA(respuesta_texto, tel, welcome)
-
-    logging.info("Usuario: %s", message)
-    logging.info("Chatbot: %s", respuesta_texto)
-
-    update_session(conn, tel, new_messages)
-
-    conn.close()
+    with create_postgres_connection() as conn:
+        History, welcome = find_or_create_session(conn, tel)
+        respuesta_texto, new_messages = respond_message(message, History)
+        sendWA(respuesta_texto, tel, welcome)
+        #logging.info("Usuario: %s", message)
+        #logging.info("Chatbot: %s", respuesta_texto)
+        update_session(conn, tel, new_messages)
 
     return func.HttpResponse("Success", status_code=200)
