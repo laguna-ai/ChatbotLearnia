@@ -4,7 +4,12 @@ from .Chat_Response import get_completion_from_messages, plantilla_sys
 
 
 def respond_message(message, History):
-    History.append({"role": "assistant", "content": "¡Hola! Soy Learnio, IA de Learnia. ¿Cuál es tu nombre?"}) 
+    History.append(
+        {
+            "role": "assistant",
+            "content": "¡Hola! Soy Learnio, IA de Learnia. ¿Cuál es tu nombre?",
+        }
+    )
     History.append({"role": "user", "content": message})
 
     context = get_docs(message)

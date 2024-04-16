@@ -17,13 +17,12 @@ def get_completion_from_messages(messages, model=llm_name, temperature=0):
 
 
 def plantilla_sys(contexto_conversacion):
-        
-    preguntas_iniciales= """
+    preguntas_iniciales = """
     1. ¿Cuál es tu nombre?\n
     2. ¿De qué país/ciudad nos escribes?\n
     3. ¿A qué Universidad / Empresa representas?\n
     """
-    preguntas_contextuales="""
+    preguntas_contextuales = """
     - Pedir correo electronico en la conversación, para enviar un artículo, video, ppt, cotización, etc.\n
     - ¿Cuántos cursos quieres hacer o actualizar?\n
     - Tienes un presupuesto estimado para el proyecto o precio objetivo por curso?\n
