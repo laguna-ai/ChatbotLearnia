@@ -13,7 +13,7 @@ def get_sessions_to_finish(conn):
     with conn.cursor() as cur:
         query = """
             SELECT * FROM sessions
-            WHERE CAST(created_at AS BIGINT)< %s
+            WHERE created_at AS < %s
         """
         cur.execute(query, (cutoff_timestamp,))
         sessions_to_update = cur.fetchall()
