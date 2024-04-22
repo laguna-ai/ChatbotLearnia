@@ -8,14 +8,13 @@ def get_sessions_to_finish(conn):
 
     # Calcula la fecha límite para las sesiones activas (18 horas antes de ahora)
     cutoff_time = datetime.datetime.utcnow() - datetime.timedelta(hours=18)
-    cutoff_timestamp = cutoff_time.timestamp()
 
     with conn.cursor() as cur:
         query = """
             SELECT * FROM sessions
             WHERE created_at < %s
         """
-        cur.execute(query, (cutoff_timestamp,))
+        cur.execute(query, (cutoff_time,))
         sessions_to_update = cur.fetchall()
 
     return sessions_to_update
