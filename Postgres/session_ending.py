@@ -30,9 +30,8 @@ def finish_session(conn, session):
         query = """
         INSERT INTO closed_sessions (id, history, closed_at, created_at)
         SELECT %s, %s, %s, to_timestamp(%s)
-        WHERE id = %s
         """
-        cur.execute(query, (ID, json.dumps(history), closed_at, created_at))
+        cur.execute(query, (ID, json.dumps(history), closed_at, created_at,))
         query_delete = """
         DELETE FROM mi_tabla WHERE id = %s;
         """
