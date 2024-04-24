@@ -29,7 +29,7 @@ def finish_session(conn, session):
     with conn.cursor() as cur:
         query = """
         INSERT INTO closed_sessions (id, history, closed_at, created_at)
-        SELECT %s, %s, %s, to_timestamp(%s)
+        VALUES (%s, %s, to_timestamp(%s), %s);
         """
         cur.execute(query, (ID, json.dumps(history), closed_at, created_at,))
         query_delete = """
