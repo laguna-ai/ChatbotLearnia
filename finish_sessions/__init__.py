@@ -14,7 +14,7 @@ def main(mytimer: func.TimerRequest) -> None:  # pylint: disable=unused-argument
 
     with create_postgres_connection() as conn:
         sessions_to_finish = get_sessions_to_finish(conn)
-
+        
         for s in sessions_to_finish:
             analysis = get_insights(s)
             add_to_Sharepoint_list(analysis)

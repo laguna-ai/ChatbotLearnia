@@ -1,6 +1,6 @@
 import datetime
 import time
-
+import json
 # funciones de time trigger
 
 
@@ -32,7 +32,7 @@ def finish_session(conn, session):
         SELECT %s, %s, %s, to_timestamp(%s)
         WHERE id = %s
         """
-        cur.execute(query, (ID, history, closed_at, created_at))
+        cur.execute(query, (ID, json.dumps(history), closed_at, created_at))
         query_delete = """
         DELETE FROM mi_tabla WHERE id = %s;
         """
