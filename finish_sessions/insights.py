@@ -34,7 +34,7 @@ def create_prompt(fields):
 def get_insights(session):
     # first we extract, static info.
     static = {
-        "fecha": datetime.datetime.utcnow(),
+        "fecha": datetime.datetime.utcnow().__str__(),
         "session_id": session[0],
     }
 
