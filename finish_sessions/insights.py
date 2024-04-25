@@ -3,17 +3,18 @@ import datetime
 from typing import List, Dict, Any
 from pydantic import ValidationError
 from .pydantic_model import DynamicModel
-
+import copy
 
 def summarize(
     history: List[Dict[str, Any]], prompt: str, fields: List[str]
 ) -> Dict[str, str]:
-    history.append({"role": "system", "content": prompt})
+    H=copy.deepcopy(history) # para evitar añadir los prompts de resumen al diccionario de conversacion
+    H.append({"role": "system", "content": prompt})
     DynamicFieldsModel = DynamicModel.create_dynamic_model(fields)
 
     for i in range(3):
         try:
-            json_string = get_completion_from_messages(history)[0]
+            json_string = get_completion_from_messages(H)[0]
             data = DynamicFieldsModel.model_validate_json(json_string)
             return data.model_dump()  # Devolver el diccionario directamente
 
@@ -27,7 +28,8 @@ def create_prompt(fields):
     field_phrase = " ".join(f"{i}) {f}" for i, f in enumerate(fields, start=1))
     prompt = f"""A partir del historial anterior, crea un JSON con campos (sin tilde): 
     {field_phrase}
-    Estos campos corresponden a información proporcionada por el usuario."""
+    Estos campos corresponden a información proporcionada por el usuario.
+    La procedencia es el país/ciudad del usuario."""
     return prompt
 
 
@@ -57,4 +59,6 @@ def get_insights(session):
     history = session[1]
     basic = summarize(history, basic_prompt, basic_fields)
     optional = summarize(history, optional_prompt, optional_fields)
-    return {**static, **basic, **optional}
+    data = {**static, **basic, **optional}
+    converted_data = {key: str(value) for key, value in data.items()}
+    return converted_data

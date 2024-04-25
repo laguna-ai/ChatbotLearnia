@@ -1,4 +1,4 @@
-from typing import List, Type
+from typing import List, Type, Union, Optional
 from pydantic import BaseModel, create_model
 
 # Modelo base de Pydantic para validar el JSON
@@ -7,5 +7,7 @@ from pydantic import BaseModel, create_model
 class DynamicModel(BaseModel):
     @classmethod
     def create_dynamic_model(cls, fields: List[str]) -> Type["DynamicModel"]:
-        # Crear un nuevo modelo con campos dinámicos, todos como strings
-        return create_model("DynamicModel", **{field: (str, ...) for field in fields})
+        # Definimos un modelo con campos dinámicos que pueden ser tanto str como int o float,
+        # pero almacenados siempre como str.
+        attributes = {field: (Optional[Union[str, int, float]], ...) for field in fields}
+        return create_model("DynamicModel", **attributes)
