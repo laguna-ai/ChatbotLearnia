@@ -10,7 +10,7 @@ WAMessage = WhatsApp(token, phoneNumberId)
 
 # Welcome message
 bienvenida = """
-Hola, Hablas con Learnio, IA de Learnia.
+Hablas con Learnio, IA de Learnia.
 """
 
 
