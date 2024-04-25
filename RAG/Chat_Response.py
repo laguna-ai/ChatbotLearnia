@@ -44,7 +44,8 @@ def plantilla_sys(contexto_conversacion):
     {preguntas_iniciales}
     2. Una vez capturada la información del usuario, continuas\
     conversando con él de acuerdo a su perfil, preguntando por\
-    los siguientes datos si se presenta la oportunidad, sin forzar:
+    los siguientes datos si se presenta la oportunidad,\
+    pero no todos al tiempo:
     {preguntas_contextuales}
     """
     return text
