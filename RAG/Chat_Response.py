@@ -18,9 +18,9 @@ def get_completion_from_messages(messages, model=llm_name, temperature=0):
 
 def plantilla_sys(contexto_conversacion):
     preguntas_iniciales = """
-    1. ¿Cuál es tu nombre?
-    2. ¿De qué país/ciudad nos escribes?
-    3. ¿A qué universidad/empresa representas?
+    -¿Cuál es tu nombre?
+    -¿De qué país/ciudad nos escribes?
+    -¿A qué universidad/empresa representas?
     """
     preguntas_contextuales = """
     -correo electrónico (para enviar información adicional).
