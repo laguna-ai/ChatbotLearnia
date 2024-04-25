@@ -2,6 +2,7 @@ import datetime
 import time
 import json
 import uuid
+
 # funciones de time trigger
 
 
@@ -32,7 +33,15 @@ def finish_session(conn, session):
         INSERT INTO closed_sessions (id, history, closed_at, created_at)
         VALUES (%s, %s, to_timestamp(%s), %s);
         """
-        cur.execute(query, (ID+"_"+str(uuid.uuid4()), json.dumps(history), closed_at, created_at,))
+        cur.execute(
+            query,
+            (
+                ID + "_" + str(uuid.uuid4()),
+                json.dumps(history),
+                closed_at,
+                created_at,
+            ),
+        )
         query_delete = """
         DELETE FROM sessions WHERE id = %s;
         """

@@ -5,10 +5,12 @@ from pydantic import ValidationError
 from .pydantic_model import DynamicModel
 import copy
 
+
 def summarize(
     history: List[Dict[str, Any]], prompt: str, fields: List[str]
 ) -> Dict[str, str]:
-    H=copy.deepcopy(history) # para evitar añadir los prompts de resumen al diccionario de conversacion
+    # para evitar añadir los prompts de resumen al diccionario de conversacion
+    H = copy.deepcopy(history)
     H.append({"role": "system", "content": prompt})
     DynamicFieldsModel = DynamicModel.create_dynamic_model(fields)
 
