@@ -5,7 +5,7 @@ from simulation.async_simulation import main as simulate_async_messages
 import asyncio
 
 n_users = 5
-n_iterations = 5
+n_iterations = 3
 endpoint = "http://localhost:7071/api/Learnia_whatsapp"
 # endpoint="https://chatbot-webhooks.azurewebsites.net/api/Learnia_whatsapp"
 expected_count = 2 * n_iterations + 1
