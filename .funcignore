@@ -9,3 +9,5 @@ test
 .github
 test_page
 .env
+knowledge_preparation
+*.csv
