@@ -48,6 +48,6 @@ config_archivos_csv = [
      'encoding': 'UTF-8', 
      'delimiter': ','}
 ]
-output_dir = "index"
+output_dir = "RAG/index"
 
 create_index(config_archivos_csv, output_dir)
