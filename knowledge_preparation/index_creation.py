@@ -21,6 +21,8 @@ def create_index(config_archivos_csv, output_dir='.'):
         loader = CSVLoader(file_path=config['file_path'], encoding=config['encoding'], csv_args={'delimiter': config['delimiter']})
         datos = loader.load()
         datos_combinados.extend(datos)
+    # ver datos    
+    print(datos_combinados)
 
     # Crear embeddings
     embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key)
