@@ -7,7 +7,7 @@ import os
 openai_api_key = os.environ["OPENAI_API_KEY"]
 
 
-def crear_base_conocimientos(config_archivos_csv, output_dir='.'):
+def create_index(config_archivos_csv, output_dir='.'):
     """
     Crea una base de conocimientos a partir de una lista de archivos CSV con configuraciones específicas.
 
@@ -33,7 +33,6 @@ def crear_base_conocimientos(config_archivos_csv, output_dir='.'):
     print(f"Base de conocimientos creada y guardada en {output_dir}")
 
 
-
 # Ejemplo de uso
 dir="csv_conocimientos"
 config_archivos_csv = [
@@ -49,4 +48,4 @@ config_archivos_csv = [
 ]
 output_dir = "index"
 
-crear_base_conocimientos(config_archivos_csv, output_dir)
+create_index(config_archivos_csv, output_dir)
