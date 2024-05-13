@@ -35,18 +35,18 @@ def crear_base_conocimientos(config_archivos_csv, output_dir='.'):
 
 
 # Ejemplo de uso
-
+dir="csv_conocimientos"
 config_archivos_csv = [
-     {'file_path': "csv_conocimientos/general.csv", 
+     {'file_path': f"{dir}/general.csv", 
      'encoding': 'UTF-8', 
      'delimiter': ';'},
-    {'file_path': "csv_conocimientos/cursos.csv", 
+    {'file_path': f"{dir}/cursos.csv", 
      'encoding': 'UTF-8', 
      'delimiter': ';'},
-    {'file_path': "csv_conocimientos/FAQ.csv", 
+    {'file_path': f"{dir}/FAQ.csv", 
      'encoding': 'UTF-8', 
      'delimiter': ','}
 ]
-output_dir = "index"  
+output_dir = "index"
 
 crear_base_conocimientos(config_archivos_csv, output_dir)
