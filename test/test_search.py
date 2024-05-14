@@ -3,7 +3,7 @@ from RAG.index_query import search
 
 
 def create_metadata(source_name, row):
-    D = {"source": f"{source_name}.csv", "row": row}
+    D = {"source": f"csv_conocimientos/{source_name}.csv", "row": row}
     return D
 
 
@@ -30,8 +30,9 @@ queries_and_expected_docs = [
     (
         "cuéntame qué ofrecen",
         [
-            create_metadata("general", 0),
-            create_metadata("general", 2)
+            create_metadata("FAQ", 0),
+            create_metadata("FAQ", 9),
+            create_metadata("FAQ", 15),
         ],
     ),
     (
@@ -42,7 +43,7 @@ queries_and_expected_docs = [
         ],
     ),
     (
-        "son cursos sobre cualquier tema o área de conocimiento?",
+        "son cursos sobre cualquier tema o área de conocimiento los que se pueden hacer con Learnia Lab?",
         [
             create_metadata("general", 8),
         ],
