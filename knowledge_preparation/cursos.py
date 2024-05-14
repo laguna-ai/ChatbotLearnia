@@ -10,6 +10,9 @@ df = pd.read_csv(
 # Transformar el dataframe al formato deseado
 melted_df = df.melt(id_vars=["Nombre"], var_name="campo", value_name="contenido")
 
+# Reemplazar valores nulos con un valor predeterminado, por ejemplo, una cadena vacía
+melted_df.fillna("", inplace=True)
+
 # Renombrar las columnas para que coincidan con el formato de salida deseado
 melted_df.rename(columns={"Nombre": "nombre del curso"}, inplace=True)
 
