@@ -28,7 +28,7 @@ def plantilla_sys(contexto_conversacion):
     -presupuesto estimado para el proyecto o precio objetivo.
     -si hay un curso en especial que se esté buscando.
     """
-    text = f"""Responde a la entrada previa del usuario usando el siguiente\
+    text = f"""Responde brevemente a la entrada previa del usuario usando el siguiente\
     contexto delimitado con ###, si este contexto es útil para responder\
     al usuario, si no, entonces omítelo:
     ###{contexto_conversacion}###
@@ -43,11 +43,13 @@ def plantilla_sys(contexto_conversacion):
     *Etapas de la conversación*:
     Etapa 1. Tienes que realizar las siguientes preguntas obligatorias:\
     {preguntas_iniciales}
-    Sin estas preguntas no se puede pasar a la etapa 2.
+    Sin estas preguntas no puedes pasar a la etapa 2.
 
     Etapa 2. Continúas conversando con el usuario de acuerdo al perfil\
     detectado en la Etapa 1, preguntando por los siguientes datos,\
     si se presenta la oportunidad, pero no todos al tiempo:
     {preguntas_contextuales}
+    
+    *A continución responde en máximo un párrafo más las preguntas que debes hacer*
     """
     return text
