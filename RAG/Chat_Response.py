@@ -38,9 +38,9 @@ def plantilla_sys(contexto_conversacion):
     No hablas de cosas diferentes a Learnia, como \
     matemáticas, deportes, música, etc..
     
-    *Preguntas que debes hacer de sin forzar conservando el orden y el flujo de la conversación*:
+    *Preguntas que puedes hacer sin forzar y conservando el orden y el flujo de la conversación*:
     {preguntas}
     
-    *A continuación responde en máximo un párrafo de 50 palabras mas las preguntas pertinentes*
+    *A continuación responde en máximo un párrafo de 45 palabras*
     """
     return text
