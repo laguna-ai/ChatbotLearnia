@@ -26,7 +26,7 @@ def search(query, k, score_threshold):
         search_type="similarity_score_threshold",
         search_kwargs={"k": k, "score_threshold": score_threshold},
     )
-    docs = retriever.get_relevant_documents(query)
+    docs = retriever.invoke(query)
     return docs
 
 

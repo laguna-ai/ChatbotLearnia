@@ -6,28 +6,10 @@ tests:
 	pytest test/
 
 format:
-	autopep8 --in-place --recursive Learnia_whatsapp/
-	autopep8 --in-place --recursive finish_sessions/
-	autopep8 --in-place --recursive Dialogflow_webhook/
-	autopep8 --in-place --recursive RAG/
-	autopep8 --in-place --recursive simulation/
-	autopep8 --in-place --recursive test/
-	autopep8 --in-place --recursive Postgres/
-	black Learnia_whatsapp/
-	black finish_sessions/
-	black Dialogflow_webhook/
-	black RAG/
-	black simulation/
-	black test/
-	black Postgres/
+	autopep8 --in-place --recursive .
+	black .
 
 lint:
-	pylint --disable=R,C Learnia_whatsapp/*.py
-	pylint --disable=R,C finish_sessions/*.py
-	pylint --disable=R,C Dialogflow_webhook/*.py
-	pylint --disable=R,C RAG/*py
-	pylint --disable=R,C simulation/*py
-	pylint --disable=R,C test/*py
-	pylint --disable=R,C Postgres/*py
+	pylint --disable=R,C **/*.py
 
 all: install lint
