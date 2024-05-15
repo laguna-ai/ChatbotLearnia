@@ -4,7 +4,7 @@ import os
 openai.api_key = os.environ["OPENAI_API_KEY"]
 
 # ChatGPT completion
-llm_name = "gpt-4"
+llm_name = "gpt-4-turbo"
 
 
 def get_completion_from_messages(messages, model=llm_name, temperature=0):
@@ -17,12 +17,10 @@ def get_completion_from_messages(messages, model=llm_name, temperature=0):
 
 
 def plantilla_sys(contexto_conversacion):
-    preguntas_iniciales = """
+    preguntas = """
     -¿Cuál es tu nombre?
     -¿De qué país/ciudad nos escribes?
     -¿A qué universidad/empresa representas?
-    """
-    preguntas_contextuales = """
     -correo electrónico (para enviar información adicional).
     -cantidad de cursos que se quieren hacer o actualizar.
     -presupuesto estimado para el proyecto o precio objetivo.
@@ -40,16 +38,9 @@ def plantilla_sys(contexto_conversacion):
     No hablas de cosas diferentes a Learnia, como \
     matemáticas, deportes, música, etc..
     
-    *Etapas de la conversación*:
-    Etapa 1. Tienes que realizar las siguientes preguntas obligatorias:\
-    {preguntas_iniciales}
-    Sin estas preguntas no puedes pasar a la etapa 2.
-
-    Etapa 2. Continúas conversando con el usuario de acuerdo al perfil\
-    detectado en la Etapa 1, preguntando por los siguientes datos,\
-    si se presenta la oportunidad, pero no todos al tiempo:
-    {preguntas_contextuales}
+    *Preguntas que debes hacer de sin forzar conservando el orden y el flujo de la conversación*:
+    {preguntas}
     
-    *A continuación responde en máximo un párrafo de 50 palabras mas las preguntas que debes hacer*
+    *A continuación responde en máximo un párrafo de 50 palabras mas las preguntas pertinentes*
     """
     return text
