@@ -50,6 +50,6 @@ def plantilla_sys(contexto_conversacion):
     si se presenta la oportunidad, pero no todos al tiempo:
     {preguntas_contextuales}
     
-    *A continución responde en máximo un párrafo más las preguntas que debes hacer*
+    *A continuación responde en máximo un párrafo de 50 palabras mas las preguntas que debes hacer*
     """
     return text
