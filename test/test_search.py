@@ -39,7 +39,7 @@ queries_and_expected_docs = [
         "Cómo funciona LEarnia Lab? qué tiene de innovador?",
         [
             create_metadata("general", 8),
-            create_metadata("general", 9),    
+            create_metadata("general", 9),
         ],
     ),
     (
