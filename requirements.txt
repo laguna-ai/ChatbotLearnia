@@ -15,3 +15,4 @@ flask
 azure-cosmos
 azure-storage-blob
 psycopg2-binary
+pandas
