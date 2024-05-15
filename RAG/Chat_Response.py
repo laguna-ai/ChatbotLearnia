@@ -4,7 +4,7 @@ import os
 openai.api_key = os.environ["OPENAI_API_KEY"]
 
 # ChatGPT completion
-llm_name = "gpt-4-turbo"
+llm_name = "gpt-4o"
 
 
 def get_completion_from_messages(messages, model=llm_name, temperature=0):
