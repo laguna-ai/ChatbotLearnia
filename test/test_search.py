@@ -45,7 +45,7 @@ queries_and_expected_docs = [
     (
         "son cursos sobre cualquier tema o área de conocimiento los que se pueden hacer con Learnia Lab?",
         [
-            create_metadata("general", 8),
+            create_metadata("FAQ", 16),
         ],
     ),
     (
