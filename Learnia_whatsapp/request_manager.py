@@ -26,6 +26,7 @@ def manage_WA_format(messages):
         "audio",
         "video",
         "sticker",
+        "unsupported",
     ]:
         return func.HttpResponse("Success", status_code=200)
 
