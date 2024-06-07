@@ -46,4 +46,3 @@ def finish_session(conn, session):
         DELETE FROM sessions WHERE id = %s;
         """
         cur.execute(query_delete, (ID,))
-        conn.commit()
