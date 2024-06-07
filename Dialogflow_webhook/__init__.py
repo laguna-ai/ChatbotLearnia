@@ -12,7 +12,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     prompt, session_id = get_personal_info(request_json)
     history = prepare_history(request_json)
 
-    with create_postgres_connection() as conn:
+    with create_postgres_connection() as conn:  # pylint: disable=E1129
         respuesta, _ = respond_message(conn, prompt, history)
         logging.info("Usuario: %s", prompt)
         logging.info("Chatbot: %s", respuesta)

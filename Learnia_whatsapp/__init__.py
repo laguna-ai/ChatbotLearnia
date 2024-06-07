@@ -40,7 +40,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
     tel, message = get_personal_info(messages)
 
-    with create_postgres_connection() as conn:
+    with create_postgres_connection() as conn:  # pylint: disable=E1129
         History, welcome = find_or_create_session(conn, tel)
         respuesta_texto, new_messages = respond_message(conn, message, History)
         sendWA(respuesta_texto, tel, welcome)
