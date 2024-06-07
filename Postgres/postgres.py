@@ -1,7 +1,7 @@
 import json
 from RAG.SysPrompt import sysPrompt
 import os
-import psycopg2
+import psycopg
 import time
 
 
@@ -13,8 +13,13 @@ def create_postgres_connection():
     HOST = "c-learnia-postgres.mzd54eshacvnl4.postgres.cosmos.azure.com"
     PORT = "5432"
 
-    connection = psycopg2.connect(
-        database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT
+    connection = psycopg.connect(
+        dbname=DATABASE,
+        user=USER,
+        password=PASSWORD,
+        host=HOST,
+        port=PORT,
+        autocommit=True,
     )
     return connection
 
@@ -54,8 +59,6 @@ def find_or_create_session(conn, tel):
             cur.execute(query1, (tel,))
             session = cur.fetchone()
 
-        conn.commit()
-
         return session[1], welcome  # 1 for history
 
 
@@ -72,7 +75,6 @@ def update_session(conn, tel, new_messages):
         """
 
         cur.execute(query, (new_messages_json, tel))
-        conn.commit()
 
 
 # For Dialogflow CX webhook
@@ -92,4 +94,3 @@ def upsert_session_history(conn, session_id, history):
         timestamp = time.time()
 
         cur.execute(query, (session_id, history_json, timestamp, history_json))
-        conn.commit()

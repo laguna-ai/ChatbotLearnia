@@ -12,7 +12,7 @@ from .insights import get_insights
 
 def main(mytimer: func.TimerRequest) -> None:  # pylint: disable=unused-argument
 
-    with create_postgres_connection() as conn:
+    with create_postgres_connection() as conn:  # pylint: disable=E1129
         sessions_to_finish = get_sessions_to_finish(conn)
 
         for s in sessions_to_finish:
