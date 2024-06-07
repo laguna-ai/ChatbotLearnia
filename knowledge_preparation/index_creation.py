@@ -36,6 +36,5 @@ conf_archivos_csv = [
     {"file_path": f"{Dir}/cursos.csv", "encoding": "UTF-8", "delimiter": ","},
     {"file_path": f"{Dir}/FAQ.csv", "encoding": "latin-1", "delimiter": ";"},
 ]
-out_dir = "RAG/index"
 
-create_index(conf_archivos_csv, out_dir)
+create_index(conf_archivos_csv)
