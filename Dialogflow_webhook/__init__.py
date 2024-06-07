@@ -11,12 +11,11 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     request_json = req.get_json()
     prompt, session_id = get_personal_info(request_json)
     history = prepare_history(request_json)
-    respuesta, _ = respond_message(prompt, history)
-
-    logging.info("Usuario: %s", prompt)
-    logging.info("Chatbot: %s", respuesta)
 
     with create_postgres_connection() as conn:
+        respuesta, _ = respond_message(conn, prompt, history)
+        logging.info("Usuario: %s", prompt)
+        logging.info("Chatbot: %s", respuesta)
         upsert_session_history(conn, session_id, history)
 
     res = create_webhook_response(respuesta, history)

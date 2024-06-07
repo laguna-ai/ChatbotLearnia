@@ -42,7 +42,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
     with create_postgres_connection() as conn:
         History, welcome = find_or_create_session(conn, tel)
-        respuesta_texto, new_messages = respond_message(message, History)
+        respuesta_texto, new_messages = respond_message(conn, message, History)
         sendWA(respuesta_texto, tel, welcome)
         # logging.info("Usuario: %s", message)
         # logging.info("Chatbot: %s", respuesta_texto)
