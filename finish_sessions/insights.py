@@ -16,7 +16,7 @@ def summarize(
 
     for i in range(3):
         try:
-            json_string = get_completion_from_messages(H)[0]
+            json_string = get_completion_from_messages(H, model="gpt-3.5-turbo")[0]
             data = DynamicFieldsModel.model_validate_json(json_string)
             return data.model_dump()  # Devolver el diccionario directamente
 
