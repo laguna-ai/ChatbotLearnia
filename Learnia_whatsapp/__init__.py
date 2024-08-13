@@ -36,7 +36,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     messages = value["messages"][0]
     format_response = manage_WA_format(messages)
     if format_response:
-        return status_response
+        return format_response
 
     tel, message = get_personal_info(messages)
 
