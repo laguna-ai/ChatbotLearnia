@@ -4,19 +4,20 @@ from io import BytesIO
 import pandas as pd
 from langchain_core.documents import Document
 
-fields = ["categoria","tema","info"]
+fields = ["categoria", "tema", "info"]
+
 
 def get_excel_docs():
-    context=auth_sharepoint()
-    relative_url="/sites/Learnia/Documentos compartidos/Contenido Chat Bot.xlsx"
+    context = auth_sharepoint()
+    relative_url = "/sites/Learnia/Documentos compartidos/Contenido Chat Bot.xlsx"
     response = File.open_binary(context, relative_url)
     df = pd.read_excel(BytesIO(response.content))
-    
+
     # Crear una lista para almacenar los pares
     triples = []
 
     # Iterar sobre cada fila del DataFrame
-    for _ , row in df.iterrows():
+    for _, row in df.iterrows():
         # Iterar sobre cada columna excepto la última
         for j in range(len(df.columns) - 1):
             if pd.notna(row.iloc[j]) and pd.notna(row.iloc[j + 1]):
@@ -26,10 +27,9 @@ def get_excel_docs():
     #     print("topic:",t[1])
     #     print("info:",t[2])
     docs = []
-    for j,t in enumerate(triples):
+    for j, t in enumerate(triples):
         content = "\n ".join([f"{f}: {t[i]}" for i, f in enumerate(fields)])
         meta = {"id": j}
         doc = Document(page_content=content, metadata=meta)
         docs.append(doc)
     return docs
-
