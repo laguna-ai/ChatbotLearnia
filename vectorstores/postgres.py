@@ -19,3 +19,5 @@ def create_vectorstore(splits):
                     (content, embedding),
                 )
     print("Índice creado en postgres!")
+
+

@@ -17,3 +17,4 @@ azure-storage-blob
 pandas
 psycopg[binary]
 pgvector
+openpyxl
