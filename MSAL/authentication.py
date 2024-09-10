@@ -17,12 +17,12 @@ def get_token():
     result = app.acquire_token_silent(scopes=scopes, account=None)
 
     if not result:
-      result = app.acquire_token_for_client(scopes=scopes)
-      token = result["access_token"]
-      print("New token generated")#, token)
+        result = app.acquire_token_for_client(scopes=scopes)
+        token = result["access_token"]
+        print("New token generated")#, token)
     elif "access_token" in result:
-      token = result["access_token"]
-      print("Access token already acquired:")#, token)
+        token = result["access_token"]
+        print("Access token already acquired:")#, token)
     else:
-      print("Error:", result)
+        print("Error:", result)
     return token  
