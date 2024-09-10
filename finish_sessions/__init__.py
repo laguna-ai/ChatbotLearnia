@@ -16,5 +16,5 @@ def main(mytimer: func.TimerRequest) -> None:  # pylint: disable=unused-argument
 
         for s in sessions_to_finish:
             analysis = get_insights(s)
-            add_to_list(site_ID, list_ID, analysis)
+            add_to_list(analysis)
             finish_session(conn, s)
