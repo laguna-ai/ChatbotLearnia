@@ -16,7 +16,7 @@ def post_request(url, body):
     response = requests.post(url, headers=headers, data=json.dumps(body))
     return response
 
-def add_to_list(site_id=site_ID, list_id=list_ID, data):
+def add_to_list(data, site_id=site_ID, list_id=list_ID):
     url = f"{graph_url}/sites/{site_id}/lists/{list_id}/items"
     response = post_request(url, data)
     if response.status_code == 201:
