@@ -1,17 +1,14 @@
-from finish_sessions.Sharepoint import auth_sharepoint
-from office365.sharepoint.files.file import File
-from io import BytesIO
+from MSAL.search import get_df
 import pandas as pd
 from langchain_core.documents import Document
 
 fields = ["categoria", "tema", "info"]
+file_ID = "01K2FKLFWOPONZXYSMN5BJWISPJ6KOERZM" # ID de la base de conocimientos aportada por Learnia
 
 
 def get_excel_docs():
-    context = auth_sharepoint()
-    relative_url = "/sites/Learnia/Documentos compartidos/Contenido Chat Bot.xlsx"
-    response = File.open_binary(context, relative_url)
-    df = pd.read_excel(BytesIO(response.content))
+    
+    df = get_df(file_ID)
 
     # Crear una lista para almacenar los pares
     triples = []

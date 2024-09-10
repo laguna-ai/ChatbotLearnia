@@ -2,6 +2,8 @@
 from .authentication import get_token
 import requests
 import json
+import io
+import pandas as pd
 
 graph_url="https://graph.microsoft.com/v1.0"
 site_ID = "lagunaai.sharepoint.com,9a2e4810-7465-473b-831b-62c1032b1015,4e47b86c-7705-4994-a0b3-861e3fcdcaa9"
@@ -25,4 +27,20 @@ def add_to_list(data, site_id=site_ID, list_id=list_ID):
     else:
         print(f"Error al agregar el item: {response.status_code}")
         #print(response.text)
+
+def get_response(url):
+    token = get_token()
+    headers = {"Authorization": f"Bearer {token}"}
+    response = requests.get(url, headers=headers)
+    return response
+
+# Get dataframe from excel file with known id
+
+def get_df(file_id, site_id=site_ID):
+    url = f"{graph_url}/sites/{site_id}/drive/items/{file_id}/content"
+    response = get_response(url)
+    df = pd.read_excel(io.BytesIO(response.content))
+    return df
+
+
 
