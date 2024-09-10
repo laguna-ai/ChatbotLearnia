@@ -8,21 +8,21 @@ scopes = ["https://graph.microsoft.com/.default"]
 tenant = "29e1c754-dbb2-4730-92b2-29ab15b7d888"
 
 def get_token():
-  app = ConfidentialClientApplication(
+    app = ConfidentialClientApplication(
       client_id=app_id,
       client_credential=client_secret,
       authority=f"https://login.microsoftonline.com/{tenant}",
       )
 
-  result = app.acquire_token_silent(scopes=scopes, account=None)
+    result = app.acquire_token_silent(scopes=scopes, account=None)
 
-  if not result:
-    result = app.acquire_token_for_client(scopes=scopes)
-    token = result["access_token"]
-    print("New token generated")#, token)
-  elif "access_token" in result:
-    token = result["access_token"]
-    print("Access token already acquired:")#, token)
-  else:
-    print("Error:", result)
-  return token  
+    if not result:
+      result = app.acquire_token_for_client(scopes=scopes)
+      token = result["access_token"]
+      print("New token generated")#, token)
+    elif "access_token" in result:
+      token = result["access_token"]
+      print("Access token already acquired:")#, token)
+    else:
+      print("Error:", result)
+    return token  
