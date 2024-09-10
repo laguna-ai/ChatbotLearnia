@@ -6,9 +6,8 @@ from Postgres.session_ending import (
     get_sessions_to_finish,
     finish_session,
 )
-from .Sharepoint import add_to_Sharepoint_list
 from .insights import get_insights
-
+from MSAL.search import add_to_list, site_ID, list_ID
 
 def main(mytimer: func.TimerRequest) -> None:  # pylint: disable=unused-argument
 
@@ -17,5 +16,5 @@ def main(mytimer: func.TimerRequest) -> None:  # pylint: disable=unused-argument
 
         for s in sessions_to_finish:
             analysis = get_insights(s)
-            add_to_Sharepoint_list(analysis)
+            add_to_list(site_ID, list_ID, analysis)
             finish_session(conn, s)
