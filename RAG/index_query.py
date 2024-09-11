@@ -9,16 +9,18 @@ def search(query, k, score_threshold):
 
 
 def choose_embeddings():
-    if OAI_provider=="openai":
-        return OpenAIEmbeddings(openai_api_key=config_OAI["key"],
-                                model=config_OAI["embeddings"],)
-    elif OAI_provider=="azure":
+    if OAI_provider == "openai":
+        return OpenAIEmbeddings(
+            openai_api_key=config_OAI["key"],
+            model=config_OAI["embeddings"],
+        )
+    elif OAI_provider == "azure":
         return AzureOpenAIEmbeddings(
             azure_endpoint=config_AOAI["endpoint"],
             deployment=config_AOAI["embeddings_deployment"],
             openai_api_key=config_AOAI["key"],
             chunk_size=config_AOAI["chunk_size"],
-            )
+        )
 
 
 def get_docs(conn, query):

@@ -2,7 +2,7 @@ import os
 
 
 # Proveedor de la API de OAI: openai o azure
-OAI_provider = "azure" # alt: openai
+OAI_provider = "azure"  # alt: openai
 
 
 # Configuración de Azure OpenAI
@@ -10,19 +10,19 @@ config_OAI = {
     "llm": "gpt4o",
     "sum": "gpt-3.5-turbo",
     "embeddings": "text-embedding-3-small",
-    "key" : os.environ["OPENAI_API_KEY"],
+    "key": os.environ["OPENAI_API_KEY"],
 }
 
 
 # Configuración de Azure OpenAI
 config_AOAI = {
-    "endpoint" : "https://ai-chatbots.openai.azure.com/",
-    "embeddings_deployment" : "3small",
+    "endpoint": "https://ai-chatbots.openai.azure.com/",
+    "embeddings_deployment": "3small",
     "llm_deployment": "gpt4o",
     "sum_deployment": "gpt-35-turbo",
     "api_version": "2024-02-01",
-    "key" : os.environ["AOAI_API_KEY"],
-    "chunk_size" : 1000,
+    "key": os.environ["AOAI_API_KEY"],
+    "chunk_size": 1000,
 }
 
 
