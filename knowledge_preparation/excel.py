@@ -3,11 +3,12 @@ import pandas as pd
 from langchain_core.documents import Document
 
 fields = ["categoria", "tema", "info"]
-file_ID = "01K2FKLFWOPONZXYSMN5BJWISPJ6KOERZM" # ID de la base de conocimientos aportada por Learnia
+# ID de la base de conocimientos aportada por Learnia
+file_ID = "01K2FKLFWOPONZXYSMN5BJWISPJ6KOERZM"
 
 
 def get_excel_docs():
-    
+
     df = get_df(file_ID)
 
     # Crear una lista para almacenar los pares

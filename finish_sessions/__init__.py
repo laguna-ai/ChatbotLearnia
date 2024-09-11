@@ -9,6 +9,7 @@ from Postgres.session_ending import (
 from .insights import get_insights
 from MSAL.search import add_to_list, site_ID, list_ID
 
+
 def main(mytimer: func.TimerRequest) -> None:  # pylint: disable=unused-argument
 
     with create_postgres_connection() as conn:  # pylint: disable=E1129
