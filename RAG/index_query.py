@@ -1,8 +1,8 @@
-from langchain_openai import OpenAIEmbeddings
+from langchain_openai import OpenAIEmbeddings, AzureOpenAIEmbeddings
 import numpy as np
 from pgvector.psycopg import register_vector
 import os
-
+from configuration import OAI_provider, config_OAI, config_AOAI
 
 key = os.environ["OPENAI_API_KEY"]
 
@@ -10,9 +10,21 @@ key = os.environ["OPENAI_API_KEY"]
 def search(query, k, score_threshold):
     return query + str(k) + score_threshold
 
+def choose_embeddings():
+    if OAI_provider=="openai":
+        return OpenAIEmbeddings(openai_api_key=config_OAI["key"],
+                                model=config_OAI["embeddings"],)
+    elif OAI_provider=="azure":
+        return AzureOpenAIEmbeddings(
+            azure_endpoint=config_AOAI["endpoint"],
+            deployment=config_AOAI["embeddings_deployment"],
+            openai_api_key=config_AOAI["key"],
+            chunk_size=config_AOAI["chunk_size"],
+            )
+
 
 def get_docs(conn, query):
-    Embeddings = OpenAIEmbeddings(openai_api_key=key, model="text-embedding-3-small")
+    Embeddings = choose_embeddings()
     query_embedding = np.array(Embeddings.embed_query(text=query))
     # print("query embedding:", type(query_embedding))
     register_vector(conn)

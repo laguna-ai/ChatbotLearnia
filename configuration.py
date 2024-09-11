@@ -9,6 +9,7 @@ OAI_provider = "azure" # alt: openai
 config_OAI = {
     "llm": "gpt4o",
     "sum": "gpt-3.5-turbo",
+    "embeddings": "text-embedding-3-small",
     "key" : os.environ["OPENAI_API_KEY"],
 }
 

@@ -3,6 +3,7 @@ from configuration import OAI_provider,config_OAI, config_AOAI
 
 if OAI_provider=="openai":
     client=openai
+    openai.api_key=config_OAI["key"]
     llm=config_OAI["llm"]
 elif OAI_provider=="azure":
     client = openai.AzureOpenAI(

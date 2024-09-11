@@ -1,14 +1,11 @@
 from Postgres.postgres import create_postgres_connection
-from langchain_openai import OpenAIEmbeddings
-import os
-
-key = os.environ["OPENAI_API_KEY"]
+from RAG.index_query import choose_embeddings
 
 
 def create_vectorstore(splits):
 
     inputs = [item.page_content for item in splits]
-    Embeddings = OpenAIEmbeddings(openai_api_key=key, model="text-embedding-3-small")
+    Embeddings = choose_embeddings()
     embeddings = Embeddings.embed_documents(texts=inputs)
 
     with create_postgres_connection() as conn:  # pylint: disable=E1129
