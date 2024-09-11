@@ -1,8 +1,5 @@
 from langchain.document_loaders.csv_loader import CSVLoader
-import os
 from vectorstores.postgres import create_vectorstore
-
-openai_api_key = os.environ["OPENAI_API_KEY"]
 
 
 def create_index(config_archivos_csv):
