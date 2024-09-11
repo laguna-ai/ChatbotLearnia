@@ -49,3 +49,9 @@ prompts = {
     "system_general": system_general_prompt,
     "system_particular": system_particular_prompt,
 }
+
+
+# Welcome message
+bienvenida = """
+Hablas con Learnio, IA de Learnia.
+"""

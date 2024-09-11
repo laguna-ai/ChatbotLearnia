@@ -1,5 +1,6 @@
 from heyoo import WhatsApp
 import os
+from configuration import bienvenida
 
 # WA credentials
 token = os.environ["WHATSAPP_TOKEN"]
@@ -7,11 +8,6 @@ token = os.environ["WHATSAPP_TOKEN"]
 phoneNumberId = os.environ["PHONE_ID"]
 # Initialize WA messages
 WAMessage = WhatsApp(token, phoneNumberId)
-
-# Welcome message
-bienvenida = """
-Hablas con Learnio, IA de Learnia.
-"""
 
 
 def sendWA(rta, tel, welcome):
