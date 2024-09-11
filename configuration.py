@@ -7,7 +7,7 @@ OAI_provider = "azure"  # alt: openai
 
 # Configuración de Azure OpenAI
 config_OAI = {
-    "llm": "gpt4o",
+    "llm": "gpt4-o",
     "sum": "gpt-3.5-turbo",
     "embeddings": "text-embedding-3-small",
     "key": os.environ["OPENAI_API_KEY"],
@@ -16,7 +16,7 @@ config_OAI = {
 
 # Configuración de Azure OpenAI
 config_AOAI = {
-    "endpoint": "https://ai-chatbots.openai.azure.com/",
+    "endpoint": "https://urbaserbot.openai.azure.com/",
     "embeddings_deployment": "3small",
     "llm_deployment": "gpt4o",
     "sum_deployment": "gpt-35-turbo",

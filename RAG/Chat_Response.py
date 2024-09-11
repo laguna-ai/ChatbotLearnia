@@ -12,7 +12,7 @@ elif OAI_provider == "azure":
         api_key=config_AOAI["key"],
         api_version=config_AOAI["api_version"],
     )
-    llm = config_OAI["llm_deployment"]
+    llm = config_AOAI["llm_deployment"]
 
 
 def get_completion_from_messages(
