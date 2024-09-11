@@ -7,6 +7,7 @@ from configuration import OAI_provider, config_OAI, config_AOAI
 def search(query, k, score_threshold):
     return query + str(k) + score_threshold
 
+
 def choose_embeddings():
     if OAI_provider=="openai":
         return OpenAIEmbeddings(openai_api_key=config_OAI["key"],
