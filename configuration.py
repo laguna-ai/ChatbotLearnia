@@ -2,13 +2,13 @@ import os
 
 
 # Proveedor de la API de OAI: openai o azure
-config_OAI_API={"provider": "azure"} # alt: openai
+OAI_provider = "azure" # alt: openai
 
 
 # Configuración de Azure OpenAI
 config_OAI = {
-    "llm_deployment": "gpt4o",
-    "sum_deployment": "gpt-3.5-turbo",
+    "llm": "gpt4o",
+    "sum": "gpt-3.5-turbo",
     "key" : os.environ["OPENAI_API_KEY"],
 }
 

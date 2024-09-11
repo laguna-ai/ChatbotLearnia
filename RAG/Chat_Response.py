@@ -1,18 +1,26 @@
 import openai
-import os
+from configuration import OAI_provider,config_OAI, config_AOAI
 
-openai.api_key = os.environ["OPENAI_API_KEY"]
+if OAI_provider=="openai":
+    client=openai
+    llm=config_OAI["llm"]
+elif OAI_provider=="azure":
+    client = openai.AzureOpenAI(
+    azure_endpoint=config_AOAI["endpoint"],
+    api_key=config_AOAI["key"],
+    api_version=config_AOAI["api_version"],
+    )
+    llm=config_OAI["llm_deployment"]
 
-# ChatGPT completion
-llm_name = "gpt-4o"
 
-
-def get_completion_from_messages(messages, model=llm_name, temperature=0):
-    response = openai.chat.completions.create(
+def get_completion_from_messages(messages, 
+                                 model=config_AOAI["llm_deployment"], 
+                                temperature=0):
+    response = client.chat.completions.create(
         model=model,
         messages=messages,
         temperature=temperature,  # this is the degree of randomness of the model's output
-    )
+        )
     return response.choices[0].message.content, response.usage
 
 
