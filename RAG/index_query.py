@@ -1,10 +1,7 @@
 from langchain_openai import OpenAIEmbeddings, AzureOpenAIEmbeddings
 import numpy as np
 from pgvector.psycopg import register_vector
-import os
 from configuration import OAI_provider, config_OAI, config_AOAI
-
-key = os.environ["OPENAI_API_KEY"]
 
 
 def search(query, k, score_threshold):
