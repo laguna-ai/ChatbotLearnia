@@ -4,6 +4,12 @@ from typing import List, Dict, Any
 from pydantic import ValidationError
 from .pydantic_model import DynamicModel
 import copy
+from configuration import OAI_provider, config_AOAI, config_OAI
+
+# choose model 
+model = config_OAI["sum"]
+if OAI_provider == "azure":
+    model = config_AOAI["sum_deployment"]
 
 
 def summarize(
@@ -16,7 +22,7 @@ def summarize(
 
     for i in range(3):
         try:
-            json_string = get_completion_from_messages(H, model="gpt-3.5-turbo")[0]
+            json_string = get_completion_from_messages(H, model=model)[0]
             data = DynamicFieldsModel.model_validate_json(json_string)
             return data.model_dump()  # Devolver el diccionario directamente
 
