@@ -6,7 +6,7 @@ from .pydantic_model import DynamicModel
 import copy
 from configuration import OAI_provider, config_AOAI, config_OAI
 
-# choose model 
+# choose model
 model = config_OAI["sum"]
 if OAI_provider == "azure":
     model = config_AOAI["sum_deployment"]
