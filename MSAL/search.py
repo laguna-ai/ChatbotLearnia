@@ -151,7 +151,7 @@ info = {
 }
 
 info = {
-    "fecha": "2024-09-5T12:00:24Z",
+    "fecha": "2024-10-15 15:35:05.945103",
     "session_id": "46546456456",
     "nombre": "Mickey",
     "ubicacion": "Disney",
