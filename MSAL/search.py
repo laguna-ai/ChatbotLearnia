@@ -128,12 +128,12 @@ file_ID = "01QJFTYXYIPGT5S5H6ZBG2UHLHPDUXW4QK"
 
 #view_sites()
 
-site_ID = "lagunaai.sharepoint.com,9a2e4810-7465-473b-831b-62c1032b1015,4e47b86c-7705-4994-a0b3-861e3fcdcaa9"
+site_ID = "lagunaai.sharepoint.com,64bc137b-c45d-4353-8d50-4a8f32bdc66d,2ee35200-a5e9-4425-bcc5-a6d917106e2e"
 #view_site_items(site_ID)
 
 #view_site_lists(site_ID)
 
-list_ID = "fc2df33e-880f-41a7-b623-eff93a22c8bd" # lista de resúmenes de conversaciones de Learnia
+list_ID = "687a4024-9e38-4380-a3b5-250b4bee2633" # lista de resúmenes de conversaciones de Venus Tattoo
 #get_list(site_ID,list_ID)
 
 info = {
@@ -149,4 +149,15 @@ info = {
     "fecha": "2024-09-5T12:00:24Z",
     "organizacion": "Disney World",
 }
+
+info = {
+    "fecha": "2024-09-5T12:00:24Z",
+    "session_id": "46546456456",
+    "nombre": "Mickey",
+    "ubicacion": "Disney",
+    "descripcion": "indeterminado",
+    "medidas": "5x5",
+    "zona_del_cuerpo": "pecho",
+}
+
 add_to_list(site_ID, list_ID, {"fields": info})
