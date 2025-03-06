@@ -3,34 +3,38 @@
 
 <head>
 <meta charset="utf-8">
-<title>Chatbot de Klientu</title>
+<title>Chatbot Learnia</title>
 <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body>
-<link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css">
-<script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
-<df-messenger
-  location="us-central1"
-  project-id="learnia-416415"
-  agent-id="bb1d5cff-c590-4269-8012-f7e3e2bbab39"
-  language-code="es"
-  max-query-length="-1">
-  <df-messenger-chat-bubble
-    chat-title="Learnio">
-  </df-messenger-chat-bubble>
-</df-messenger>
-<style>
-  df-messenger {
-    z-index: 999;
-    position: fixed;
-    bottom: 16px;
-    right: 16px;
-    --df-messenger-chat-window-width: 400px;  /* Ajusta el ancho del chat */  
-  }
-</style>
+  <link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css">
+  <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
+  <df-messenger
+    location="us-central1"
+    project-id="learnia2"
+    agent-id="bf201a16-30c2-4d76-a481-11e41e568bde"
+    language-code="es"
+    max-query-length="-1">
+    <df-messenger-chat-bubble
+     chat-title="Learnio">
+    </df-messenger-chat-bubble>
+  </df-messenger>
+  <style>
+    df-messenger {
+      z-index: 999;
+      position: fixed;
+      --df-messenger-font-color: #000;
+      --df-messenger-font-family: Google Sans;
+      --df-messenger-chat-background: #f3f6fc;
+      --df-messenger-message-user-background: #d3e3fd;
+      --df-messenger-message-bot-background: #fff;
+      bottom: 16px;
+      right: 16px;
+    }
+  </style>
   
-<h1>Chatbot de Learnia</h1>
+<h1>Chatbot Learnia</h1>
 
 <div class="row">
   
