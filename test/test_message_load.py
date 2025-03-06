@@ -29,7 +29,7 @@ def test_mensajes_enviados_por_usuario():
     # Conectar a la base de datos
     conn = get_connection()
 
-    with conn.cursor() as cur:
+    with conn.cursor() as cur:  # pylint: disable=E1101
         # Ejecutar una sola consulta usando ANY para obtener los conteos de todos los números
         cur.execute(
             """
@@ -54,4 +54,4 @@ def test_mensajes_enviados_por_usuario():
 
         # consulta_borrado = "DELETE FROM sessions WHERE id = ANY(%s);"
         # cur.execute(consulta_borrado, (telefonos,))
-        conn.commit()
+        conn.commit()  # pylint: disable=E1101
