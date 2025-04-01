@@ -8,6 +8,7 @@ openai.api_key = os.environ["OPENAI_API_KEY"]
 # ChatGPT completion
 llm_name = "gpt-4o-mini"
 
+
 def get_completion_from_messages(messages, model=llm_name, temperature=0):
     response = openai.chat.completions.create(
         model=model,

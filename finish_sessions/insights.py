@@ -5,6 +5,7 @@ from pydantic import ValidationError
 from .pydantic_model import DynamicModel
 import copy
 
+
 def summarize(
     history: List[Dict[str, Any]], prompt: str, fields: List[str]
 ) -> Dict[str, str]:
