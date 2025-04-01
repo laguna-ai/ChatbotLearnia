@@ -1,10 +1,9 @@
-from RAG.Chat_Response import get_completion_from_messages
+from .OpenAI import get_completion_from_messages
 import datetime
 from typing import List, Dict, Any
 from pydantic import ValidationError
 from .pydantic_model import DynamicModel
 import copy
-
 
 def summarize(
     history: List[Dict[str, Any]], prompt: str, fields: List[str]
@@ -16,7 +15,7 @@ def summarize(
 
     for i in range(3):
         try:
-            json_string = get_completion_from_messages(H, model="gpt-3.5-turbo")[0]
+            json_string = get_completion_from_messages(H)
             data = DynamicFieldsModel.model_validate_json(json_string)
             return data.model_dump()  # Devolver el diccionario directamente
 
