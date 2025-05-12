@@ -10,6 +10,6 @@ format:
 	black .
 
 lint:
-	pylint --disable=R,C **/*.py
+	pylint --disable=R,C *.py **/*.py
 
 all: install lint format
