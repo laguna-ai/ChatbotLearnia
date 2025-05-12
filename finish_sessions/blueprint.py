@@ -3,7 +3,7 @@
 # app.register_functions(blueprint)
 #
 # Please refer to https://aka.ms/azure-functions-python-blueprints
-
+# pylint: disable=unused-argument
 import azure.functions as func
 import logging
 from Postgres.postgres import (
@@ -24,7 +24,7 @@ blueprint = func.Blueprint()
 )
 def finish_sessions(
     myTimer: func.TimerRequest,
-) -> None:  # pylint: disable=unused-argument
+) -> None:  
 
     logging.info("Python timer trigger function started")
     with create_postgres_connection() as conn:  # pylint: disable=E1129

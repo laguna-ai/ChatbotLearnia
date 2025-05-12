@@ -1,5 +1,5 @@
 import json
-from RAG.SysPrompt import sysPrompt
+from RAG.SysPrompt import build_sysPrompt
 import psycopg
 import time
 from configuration import config_postgres
@@ -40,7 +40,7 @@ def find_or_create_session(conn, tel):
 
         params = (
             tel,
-            json.dumps(sysPrompt),
+            json.dumps(build_sysPrompt("Pepito")),
             timestamp,
             tel,
         )
