@@ -8,3 +8,4 @@ test
 .venv
 test_page
 simulation
+.env
