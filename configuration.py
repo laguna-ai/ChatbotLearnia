@@ -5,7 +5,7 @@ config_postgres = {
     "password": os.environ["POSTGRES_PASS"],
     "dbname": "citus",
     "user": "citus",
-    "host": "c-corec-postgres.tbisakw2vmnl3d.postgres.cosmos.azure.com",
+    "host": "c-learnia-postgres.mzd54eshacvnl4.postgres.cosmos.azure.com",
     "port": "5432",
 }
 
