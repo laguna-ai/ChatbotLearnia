@@ -6,9 +6,3 @@ __queuestorage__
 local.settings.json
 test
 .venv
-.github
-test_page
-.env
-knowledge_preparation
-*.csv
-csv_conocimientos

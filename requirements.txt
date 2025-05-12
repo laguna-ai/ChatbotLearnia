@@ -2,8 +2,7 @@ langchain==0.1.11
 openai
 tiktoken
 faiss-cpu
-heyoo
-Office365-REST-Python-Client
+msal
 pylint
 autopep8
 black
@@ -12,8 +11,6 @@ langchain-openai
 langchain-community
 pytest
 flask
-azure-cosmos
-azure-storage-blob
 pandas
 psycopg[binary]
 pgvector
