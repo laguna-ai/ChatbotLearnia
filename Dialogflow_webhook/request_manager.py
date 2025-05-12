@@ -1,5 +1,5 @@
 import logging
-from RAG.SysPrompt import sysPrompt
+from RAG.SysPrompt import build_sysPrompt
 import copy
 import azure.functions as func
 import json
@@ -18,7 +18,7 @@ def prepare_history(request_json):
     try:
         history = request_json["sessionInfo"]["parameters"]["context"]
     except KeyError:
-        history = copy.deepcopy(sysPrompt)
+        history = copy.deepcopy(build_sysPrompt("Pepito"))
     return history
 
 

@@ -1,17 +1,16 @@
 import json
 from RAG.SysPrompt import sysPrompt
-import os
 import psycopg
 import time
-
+from configuration import config_postgres
 
 def create_postgres_connection():
     # open database connection
-    PASSWORD = os.environ["POSTGRES_PASS"]
-    DATABASE = "citus"
-    USER = "citus"
-    HOST = "c-learnia-postgres.mzd54eshacvnl4.postgres.cosmos.azure.com"
-    PORT = "5432"
+    PASSWORD = config_postgres["password"]
+    DATABASE = config_postgres["dbname"]
+    USER = config_postgres["user"]
+    HOST = config_postgres["host"]
+    PORT = config_postgres["port"]
 
     connection = psycopg.connect(
         dbname=DATABASE,

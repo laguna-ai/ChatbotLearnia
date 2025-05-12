@@ -1,12 +1,12 @@
 import openai
 import os
-
+from configuration import config_OAI
 # Configura tu clave de API de OpenAI aquí o usa variables de entorno
 openai.api_key = os.environ["OPENAI_API_KEY"]
 
 
 # ChatGPT completion
-llm_name = "gpt-4o-mini"
+llm_name = config_OAI["sum"]
 
 
 def get_completion_from_messages(messages, model=llm_name, temperature=0):
