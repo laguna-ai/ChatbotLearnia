@@ -24,7 +24,7 @@ blueprint = func.Blueprint()
 )
 def finish_sessions(
     myTimer: func.TimerRequest,
-) -> None:  
+) -> None:
 
     logging.info("Python timer trigger function started")
     with create_postgres_connection() as conn:  # pylint: disable=E1129

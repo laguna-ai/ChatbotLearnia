@@ -8,4 +8,3 @@ def build_sysPrompt(name):
             "content": prompts["system_general"](name),
         }
     ]
-

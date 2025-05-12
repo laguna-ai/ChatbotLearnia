@@ -40,4 +40,3 @@ prompts = {
     "system_general": get_system_prompt_with_name,  # función para personalizar
     "system_particular": system_particular_prompt,
 }
-

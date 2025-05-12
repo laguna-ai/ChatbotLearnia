@@ -4,6 +4,7 @@ import psycopg
 import time
 from configuration import config_postgres
 
+
 def create_postgres_connection():
     # open database connection
     PASSWORD = config_postgres["password"]

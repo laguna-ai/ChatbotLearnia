@@ -1,5 +1,6 @@
 import openai
 from configuration import config_OAI, prompts
+
 openai.api_key = config_OAI["key"]
 
 # ChatGPT completion
