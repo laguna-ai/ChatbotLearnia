@@ -28,11 +28,11 @@ def finish_sessions(myTimer: func.TimerRequest) -> None: # pylint: disable=unuse
         logging.info("Connected to Postgres")
         # Get the sessions that need to be finished 
         sessions_to_finish = get_sessions_to_finish(conn)
-        logging.info(f"Sessions to finish: {len(sessions_to_finish)}")
+        logging.info("Sessions to finish: %s", len(sessions_to_finish))
         for s in sessions_to_finish:
             analysis = get_insights(s)
-            logging.info(f"Analysis of session {s[0]}: {analysis}")
+            logging.info("Analysis of session %s: %s", s[0], analysis)
             add_to_list(analysis)
-            logging.info(f"Analysis Added to Sharepoint")
+            logging.info("Analysis Added to Sharepoint")
             finish_session(conn, s)
-            logging.info(f"Session {s[0]} finished")
+            logging.info("Session %s finished", s[0])
