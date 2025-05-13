@@ -74,5 +74,5 @@ def create_sharepoint_index():
     print("some splits:")
     
     # 6. Crear vectorstore
-    #create_vectorstore(all_splits)
-    create_sharepoint_index()
+    create_vectorstore(all_splits)
+create_sharepoint_index()
