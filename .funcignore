@@ -9,3 +9,7 @@ test
 test_page
 simulation
 .env
+knowledge_preparation
+vector_stores
+Makefile
+README.md
