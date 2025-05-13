@@ -1,40 +1,78 @@
-from langchain.document_loaders.csv_loader import CSVLoader
-import os
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from io import BytesIO
+from docx import Document as DocxDocument
 from vectorstores.postgres import create_vectorstore
+from MSAL.search import get_all_files_info, get_file_content
+from langchain_core.documents import Document
+from pypdf import PdfReader
 
-openai_api_key = os.environ["OPENAI_API_KEY"]
 
+def create_sharepoint_index():
+    """Crea una base de conocimientos desde SharePoint con DOCX y PDF en memoria"""
+    
+    # 1. Obtener y filtrar archivos
+    valid_files = [
+        item for item in get_all_files_info() 
+        if item['type'] == 'file' and 
+        item['name'].lower().endswith(('.pdf', '.docx'))
+    ]
+    
+    all_docs = []
+    
+    # 2. Procesamiento común en función
+    for file_info in valid_files:
+        try:
+            file_bytes = get_file_content(file_info['id'])
+            base_metadata = {
+                "source": file_info['path'],
+                "file_name": file_info['name']
+            }
+            
+            # Procesamiento específico por tipo
+            if file_info['name'].lower().endswith('.docx'):
+                doc = DocxDocument(BytesIO(file_bytes))
+                text_content = "\n".join(p.text for p in doc.paragraphs)
+                all_docs.append(Document(
+                    page_content=text_content,
+                    metadata=base_metadata
+                ))
+                
+            elif file_info['name'].lower().endswith('.pdf'):
+                pdf = PdfReader(BytesIO(file_bytes))
+                for page_num, page in enumerate(pdf.pages, 1):
+                    all_docs.append(Document(
+                        page_content=page.extract_text(),
+                        metadata={
+                            **base_metadata,
+                            "page": page_num,
+                            "total_pages": len(pdf.pages)
+                        }
+                    ))
+            
+        except Exception as e:
+            print(f"Error procesando {file_info['name']}: {str(e)}")
+            continue
 
-def create_index(config_archivos_csv):
-    """
-    Crea una base de conocimientos en postgres a partir de una lista de archivos CSV con configuraciones específicas.
-
-    :param config_archivos_csv: Lista de diccionarios con configuraciones de archivos CSV.
-                                Cada diccionario debe tener las claves: 'file_path', 'encoding', y 'delimiter'.
-    """
-    # Cargar y combinar todos los datos de los archivos CSV
-    datos_combinados = []
-    for config in config_archivos_csv:
-        loader = CSVLoader(
-            file_path=config["file_path"],
-            encoding=config["encoding"],
-            csv_args={"delimiter": config["delimiter"]},
+    # 3. Dividir y formatear documentos
+    text_splitter = RecursiveCharacterTextSplitter(
+        chunk_size=500,
+        chunk_overlap=15
+    )
+    
+    all_splits = text_splitter.split_documents(all_docs)
+    
+    # Añadir metadatos al contenido
+    for split in all_splits:
+        metadata = split.metadata
+        split.page_content = (
+            f"ARCHIVO: {metadata['file_name']}\n"
+            f"RUTA: {metadata['source']}\n\n"
+            f"{split.page_content}"
         )
-        datos = loader.load()
-        datos_combinados.extend(datos)
-    # ver datos
-    print("DATOS:", datos_combinados)
-
-    # Crear embeddings
-    create_vectorstore(datos_combinados)
-
-
-# Ejemplo de uso
-Dir = "csv_conocimientos"
-conf_archivos_csv = [
-    {"file_path": f"{Dir}/general.csv", "encoding": "UTF-8", "delimiter": ";"},
-    {"file_path": f"{Dir}/cursos.csv", "encoding": "UTF-8", "delimiter": ","},
-    {"file_path": f"{Dir}/FAQ.csv", "encoding": "latin-1", "delimiter": ";"},
-]
-
-create_index(conf_archivos_csv)
+    
+    print(f"Total de splits generados: {len(all_splits)}")
+    print("some splits:")
+    
+    # 6. Crear vectorstore
+    #create_vectorstore(all_splits)
+    create_sharepoint_index()

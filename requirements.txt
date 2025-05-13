@@ -16,3 +16,5 @@ psycopg[binary]
 pgvector
 openpyxl
 azure-core
+python-docx
+pypdf
