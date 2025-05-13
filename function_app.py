@@ -1,6 +1,6 @@
 import azure.functions as func
 import logging
-from finish_sessions.blueprint import blueprint
+#from finish_sessions.blueprint import blueprint
 from RAG.conversation_manager import respond_message
 from Postgres.postgres import create_postgres_connection, upsert_session_history
 from Dialogflow_webhook.request_manager import (
@@ -11,7 +11,7 @@ from Dialogflow_webhook.request_manager import (
 
 
 app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
-app.register_blueprint(blueprint)
+#app.register_blueprint(blueprint)
 
 
 @app.route(route="webhook")
