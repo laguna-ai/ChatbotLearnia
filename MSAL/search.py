@@ -4,7 +4,6 @@ import requests
 import json
 import io
 import pandas as pd
-from docx import Document
 
 graph_url = "https://graph.microsoft.com/v1.0"
 site_ID = "lagunaai.sharepoint.com,9a2e4810-7465-473b-831b-62c1032b1015,4e47b86c-7705-4994-a0b3-861e3fcdcaa9"
@@ -84,25 +83,6 @@ def get_all_file_ids(site_id=site_ID):
             url = data.get('@odata.nextLink')
     
     return ids
-
-# Función para procesar archivos Word
-def get_word_file(file_id, site_id=site_ID):
-    # Obtener contenido del archivo
-    url = f"{graph_url}/sites/{site_id}/drive/items/{file_id}/content"
-    response = get_response(url)
-    
-    if response.status_code != 200:
-        raise Exception(f"Error al descargar archivo: {response.status_code}")
-    
-    # Procesar el documento Word
-    
-    file_stream = io.BytesIO(response.content)
-    doc = Document(file_stream)
-    
-    # Extraer texto de todos los párrafos
-    text = [paragraph.text for paragraph in doc.paragraphs]
-    
-    return '\n'.join(text)
 
 
 # En el archivo sharepoint_utils.py
