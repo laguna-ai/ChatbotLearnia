@@ -71,7 +71,6 @@ def create_sharepoint_index():
         )
     
     print(f"Total de splits generados: {len(all_splits)}")
-    print("some splits:")
     
     # 6. Crear vectorstore
     create_vectorstore(all_splits)
