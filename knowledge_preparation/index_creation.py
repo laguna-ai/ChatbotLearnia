@@ -5,7 +5,8 @@ from vectorstores.postgres import create_vectorstore
 from MSAL.search import get_all_files_info, get_file_content
 from langchain_core.documents import Document
 from pypdf import PdfReader
-
+from docx.opc.exceptions import PackageNotFoundError  # Para DOCX corruptos
+from pypdf.errors import PdfReadError  # Para PDFs inválidos
 
 def create_sharepoint_index():
     """Crea una base de conocimientos desde SharePoint con DOCX y PDF en memoria"""
@@ -48,9 +49,11 @@ def create_sharepoint_index():
                             "total_pages": len(pdf.pages)
                         }
                     ))
-            
-        except Exception as e:
-            print(f"Error procesando {file_info['name']}: {str(e)}")
+        except (PackageNotFoundError, ValueError) as e:
+            print(f"Archivo Word inválido/corrupto: {file_info['name']} - {str(e)}")
+            continue
+        except PdfReadError as e:
+            print(f"Error leyendo PDF: {file_info['name']} - {str(e)}")
             continue
 
     # 3. Dividir y formatear documentos

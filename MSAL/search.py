@@ -136,9 +136,14 @@ def get_file_content(file_id, site_id=site_ID):
     
     if response.status_code == 200:
         return response.content
+    elif response.status_code == 404:
+        raise FileNotFoundError(f"Archivo no encontrado (ID: {file_id})")
+    elif response.status_code == 403:
+        raise PermissionError(f"Sin permisos para acceder al archivo (ID: {file_id})")
+    elif response.status_code == 401:
+        raise ConnectionError("Error de autenticación con SharePoint")
     else:
-        raise Exception(f"Error descargando archivo {file_id}: {response.status_code}")
-
+        raise ConnectionError(f"Error {response.status_code} al descargar archivo {file_id}")
 
 # print("Archivos en sitio de Learnia:")
 # # Obtener todos los archivos y carpetas
