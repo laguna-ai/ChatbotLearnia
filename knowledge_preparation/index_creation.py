@@ -59,7 +59,7 @@ def create_sharepoint_index():
             continue
 
     # 3. Dividir y formatear documentos
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=15)
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=600, chunk_overlap=100)
 
     all_splits = text_splitter.split_documents(all_docs)
 
