@@ -28,7 +28,7 @@ def create_postgres_connection():
 #         # Consulta unificada usando CTEs para manejar la lógica de sesión
 #         query = """
 #         INSERT INTO sessions (id, history, created_at)
-#         SELECT 
+#         SELECT
 #             %s, %s, to_timestamp(%s)
 #         WHERE NOT EXISTS (
 #             SELECT 1 FROM sessions WHERE id = %s

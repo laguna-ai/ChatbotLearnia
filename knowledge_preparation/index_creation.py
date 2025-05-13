@@ -8,47 +8,49 @@ from pypdf import PdfReader
 from docx.opc.exceptions import PackageNotFoundError  # Para DOCX corruptos
 from pypdf.errors import PdfReadError  # Para PDFs inválidos
 
+
 def create_sharepoint_index():
     """Crea una base de conocimientos desde SharePoint con DOCX y PDF en memoria"""
-    
+
     # 1. Obtener y filtrar archivos
     valid_files = [
-        item for item in get_all_files_info() 
-        if item['type'] == 'file' and 
-        item['name'].lower().endswith(('.pdf', '.docx'))
+        item
+        for item in get_all_files_info()
+        if item["type"] == "file" and item["name"].lower().endswith((".pdf", ".docx"))
     ]
-    
+
     all_docs = []
-    
+
     # 2. Procesamiento común en función
     for file_info in valid_files:
         try:
-            file_bytes = get_file_content(file_info['id'])
+            file_bytes = get_file_content(file_info["id"])
             base_metadata = {
-                "source": file_info['path'],
-                "file_name": file_info['name']
+                "source": file_info["path"],
+                "file_name": file_info["name"],
             }
-            
+
             # Procesamiento específico por tipo
-            if file_info['name'].lower().endswith('.docx'):
+            if file_info["name"].lower().endswith(".docx"):
                 doc = DocxDocument(BytesIO(file_bytes))
                 text_content = "\n".join(p.text for p in doc.paragraphs)
-                all_docs.append(Document(
-                    page_content=text_content,
-                    metadata=base_metadata
-                ))
-                
-            elif file_info['name'].lower().endswith('.pdf'):
+                all_docs.append(
+                    Document(page_content=text_content, metadata=base_metadata)
+                )
+
+            elif file_info["name"].lower().endswith(".pdf"):
                 pdf = PdfReader(BytesIO(file_bytes))
                 for page_num, page in enumerate(pdf.pages, 1):
-                    all_docs.append(Document(
-                        page_content=page.extract_text(),
-                        metadata={
-                            **base_metadata,
-                            "page": page_num,
-                            "total_pages": len(pdf.pages)
-                        }
-                    ))
+                    all_docs.append(
+                        Document(
+                            page_content=page.extract_text(),
+                            metadata={
+                                **base_metadata,
+                                "page": page_num,
+                                "total_pages": len(pdf.pages),
+                            },
+                        )
+                    )
         except (PackageNotFoundError, ValueError) as e:
             print(f"Archivo Word inválido/corrupto: {file_info['name']} - {str(e)}")
             continue
@@ -57,13 +59,10 @@ def create_sharepoint_index():
             continue
 
     # 3. Dividir y formatear documentos
-    text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=500,
-        chunk_overlap=15
-    )
-    
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=15)
+
     all_splits = text_splitter.split_documents(all_docs)
-    
+
     # Añadir metadatos al contenido
     for split in all_splits:
         metadata = split.metadata
@@ -72,9 +71,11 @@ def create_sharepoint_index():
             f"RUTA: {metadata['source']}\n\n"
             f"{split.page_content}"
         )
-    
+
     print(f"Total de splits generados: {len(all_splits)}")
-    
+
     # 6. Crear vectorstore
     create_vectorstore(all_splits)
+
+
 create_sharepoint_index()
