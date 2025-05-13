@@ -6,9 +6,10 @@ __queuestorage__
 local.settings.json
 test
 .venv
-.github
 test_page
+simulation
 .env
 knowledge_preparation
-*.csv
-csv_conocimientos
+vector_stores
+Makefile
+README.md
