@@ -1,9 +1,8 @@
 import openai
-import os
 from configuration import config_OAI
 
 # Configura tu clave de API de OpenAI aquí o usa variables de entorno
-openai.api_key = os.environ["OPENAI_API_KEY"]
+openai.api_key = config_OAI["key"]
 
 
 # ChatGPT completion
