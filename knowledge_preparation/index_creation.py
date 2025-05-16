@@ -33,11 +33,30 @@ def create_sharepoint_index():
             # Procesamiento específico por tipo
             if file_info["name"].lower().endswith(".docx"):
                 doc = DocxDocument(BytesIO(file_bytes))
+                 # Texto normal de párrafos
                 text_content = "\n".join(p.text for p in doc.paragraphs)
                 all_docs.append(
                     Document(page_content=text_content, metadata=base_metadata)
                 )
-
+                
+                # Procesamiento de tablas
+                for table in doc.tables:
+                    headers = [cell.text.strip() for cell in table.rows[0].cells]
+                    
+                    for row in table.rows[1:]:  # Saltar la fila de encabezados
+                        row_data = []
+                        for i, cell in enumerate(row.cells):
+                            if i < len(headers):  # Prevenir index error
+                                row_data.append(f"{headers[i]}: {cell.text.strip()}")
+                        
+                        if row_data:  # Solo añadir filas con contenido
+                            table_content = "\n".join(row_data)
+                            all_docs.append(
+                                Document(
+                                    page_content=table_content,
+                                    metadata={**base_metadata, "tipo": "tabla"}
+                                )
+                            )
             elif file_info["name"].lower().endswith(".pdf"):
                 pdf = PdfReader(BytesIO(file_bytes))
                 for page_num, page in enumerate(pdf.pages, 1):
