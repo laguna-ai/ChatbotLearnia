@@ -20,7 +20,7 @@ def post_request(url, body):
 
 def add_to_list(data, site_id=site_ID, list_id=list_ID):
     url = f"{graph_url}/sites/{site_id}/lists/{list_id}/items"
-    response = post_request(url, data)
+    response = post_request(url,{"fields": data})
     if response.status_code == 201:
         print("Item agregado exitosamente.")
         # print(json.dumps(response.json(), indent=4))
